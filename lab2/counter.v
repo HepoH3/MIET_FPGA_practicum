@@ -6,6 +6,8 @@ module counter(
     output [6:0] HEX0
 );
 
-
+ /*
+    You shall add your code here
+  */
 
 endmodule
