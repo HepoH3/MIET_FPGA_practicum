@@ -1,0 +1,38 @@
+#-----------------------------------------------------------
+# Vivado v2019.2.1 (64-bit)
+# SW Build 2729669 on Thu Dec  5 04:49:17 MST 2019
+# IP Build 2729494 on Thu Dec  5 07:38:25 MST 2019
+# Start of session at: Wed May  6 18:51:23 2020
+# Process ID: 18772
+# Current directory: B:/Projects/Vivado/project_lab_2/tmp
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent14464 B:\Projects\Vivado\project_lab_2\tmp\project_lab_2.xpr
+# Log file: B:/Projects/Vivado/project_lab_2/tmp/vivado.log
+# Journal file: B:/Projects/Vivado/project_lab_2/tmp\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project B:/Projects/Vivado/project_lab_2/tmp/project_lab_2.xpr
+update_compile_order -fileset sources_1
+synth_design -rtl -name rtl_1
+set_property SOURCE_SET sources_1 [get_filesets sim_1]
+add_files -fileset sim_1 {B:/Projects/Vivado/project_lab_2/tb/test_hex_tb.v B:/Projects/Vivado/project_lab_2/tb/test_clk_tb.v}
+update_compile_order -fileset sim_1
+update_compile_order -fileset sim_1
+launch_simulation
+source test_clk_tb.tcl
+close_sim
+launch_simulation
+source test_clk_tb.tcl
+close_sim
+launch_simulation
+launch_simulation
+source test_clk_tb.tcl
+run 2 us
+relaunch_sim
+create_run synth_2 -flow {Vivado Synthesis 2019} -strategy {Vivado Synthesis Defaults} -report_strategy {Vivado Synthesis Default Reports}
+current_run [get_runs synth_2]
+set_property part xc7a35tcpg236-1 [current_project]
+close_design
+synth_design -rtl -name rtl_1
+launch_runs synth_2 -jobs 4
+wait_on_run synth_2
+close_sim
