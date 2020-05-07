@@ -1,0 +1,6 @@
+0.6
+2019.2
+Nov  6 2019
+21:57:16
+D:/Verilog/lb_2/tb/main_tb.v,1588857030,verilog,,,,main_tb,,,,,,,,
+D:/Verilog/lb_2/tmp/device/device.sim/sim_1/synth/timing/xsim/main_tb_time_synth.v,1588866546,verilog,,D:/Verilog/lb_2/tb/main_tb.v,,count_event;dff_leds;glbl;main_dev,,,,,,,,
