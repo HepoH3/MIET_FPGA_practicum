@@ -1,8 +1,0 @@
-INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Verilog/lb_2/rtl/count_event.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module count_event
-INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Verilog/lb_2/rtl/dff_leds.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module dff_leds
-INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Verilog/lb_2/rtl/main_dev.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module main_dev
-INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Verilog/lb_2/tb/main_tb.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module main_tb

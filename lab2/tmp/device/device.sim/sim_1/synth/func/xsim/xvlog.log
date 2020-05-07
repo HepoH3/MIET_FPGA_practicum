@@ -1,6 +1,0 @@
-INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Verilog/lb_2/tmp/device/device.sim/sim_1/synth/func/xsim/main_tb_func_synth.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module dff_leds
-INFO: [VRFC 10-311] analyzing module main_dev
-INFO: [VRFC 10-311] analyzing module glbl
-INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Verilog/lb_2/tb/main_tb.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module main_tb
