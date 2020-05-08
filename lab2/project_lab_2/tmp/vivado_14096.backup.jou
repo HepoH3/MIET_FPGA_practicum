@@ -2,15 +2,13 @@
 # Vivado v2019.2.1 (64-bit)
 # SW Build 2729669 on Thu Dec  5 04:49:17 MST 2019
 # IP Build 2729494 on Thu Dec  5 07:38:25 MST 2019
-# Start of session at: Thu May  7 23:52:02 2020
-# Process ID: 8236
+# Start of session at: Thu May  7 23:31:20 2020
+# Process ID: 14096
 # Current directory: B:/Projects/Vivado/project_lab_2/tmp
-# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent7008 B:\Projects\Vivado\project_lab_2\tmp\project_lab_2.xpr
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent9820 B:\Projects\Vivado\project_lab_2\tmp\project_lab_2.xpr
 # Log file: B:/Projects/Vivado/project_lab_2/tmp/vivado.log
 # Journal file: B:/Projects/Vivado/project_lab_2/tmp\vivado.jou
 #-----------------------------------------------------------
 start_gui
 open_project B:/Projects/Vivado/project_lab_2/tmp/project_lab_2.xpr
 update_compile_order -fileset sources_1
-launch_runs synth_2 -jobs 2
-wait_on_run synth_2

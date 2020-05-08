@@ -30,7 +30,7 @@ module debouncer(
     
     // sync with clock and combat metastability
     reg sync_0 = 0, sync_1 = 0;
-    always @(posedge clk_i) sync_0 <= btn_i;
+    always @(posedge clk_i) sync_0 <= !btn_i; //Фикс активного сигнала кнопки
     always @(posedge clk_i) sync_1 <= sync_0;
 
     // 2.6 ms counter at 50 MHz
