@@ -8,6 +8,6 @@ module counter(
     output [6:0] hex0_o
 );
 
-
+// Haaaaaaands
 
 endmodule
