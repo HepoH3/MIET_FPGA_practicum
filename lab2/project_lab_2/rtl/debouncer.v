@@ -21,23 +21,30 @@
 
 
 module debouncer(
-    input clk_i,
-    input btn_i,
-    output reg state_o=0,
-    output ondn_o,
-    output onup_o
+    input   clk_i,
+    input   btn_i,
+    input   rst_i,
+    output  btn_o
     );
     
     // sync with clock and combat metastability
-    reg sync_0 = 0, sync_1 = 0;
-    always @(posedge clk_i) sync_0 <= !btn_i; //Фикс активного сигнала кнопки
-    always @(posedge clk_i) sync_1 <= sync_0;
-
-    // 2.6 ms counter at 50 MHz
+    reg         state_o = 0;
+    reg  [1:0]  sync;
+    // 2.6 ms counter at 50 MHz   
+    always @( posedge clk_i or posedge rst_i ) begin
+        if ( rst_i ) begin
+            sync <= 2'b00;
+        end
+        else begin
+            sync[0] <= btn_i;
+            sync[1] <= sync[0];
+        end
+    end
+    
     reg [1:0] counter = 2'd0;
-    wire idle = (state_o == sync_1);
+    wire idle = (state_o == sync[1]);
     wire max = &counter;
-
+    
     always @(posedge clk_i)
     begin
         if (idle)
@@ -49,8 +56,6 @@ module debouncer(
                 state_o <= ~state_o;
         end
     end
-
-    assign ondn_o = ~idle & max & ~state_o;
-    assign onup_o = ~idle & max & state_o;
+    assign btn_o = ~idle & max & ~state_o;   
     
 endmodule

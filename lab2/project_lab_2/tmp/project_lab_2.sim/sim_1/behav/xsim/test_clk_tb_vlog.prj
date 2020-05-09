@@ -1,5 +1,6 @@
 # compile verilog/system verilog design source files
 verilog xil_defaultlib  \
+"../../../../../rtl/button_synchronizer.v" \
 "../../../../../rtl/counter_8.v" \
 "../../../../../rtl/debouncer.v" \
 "../../../../../rtl/hub.v" \
