@@ -36,12 +36,12 @@ module debouncer(
             sync <= 2'b00;
         end
         else begin
-            sync[0] <= btn_i;
+            sync[0] <= !btn_i;
             sync[1] <= sync[0];
         end
     end
     
-    reg [1:0] counter = 2'd0;
+    reg [1:0] counter;
     wire idle = (state_o == sync[1]);
     wire max = &counter;
     

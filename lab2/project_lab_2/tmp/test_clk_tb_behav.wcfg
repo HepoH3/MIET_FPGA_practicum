@@ -12,12 +12,12 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="1390258fs"></ZoomEndTime>
-      <Cursor1Time time="1000000fs"></Cursor1Time>
+      <ZoomEndTime time="2410001fs"></ZoomEndTime>
+      <Cursor1Time time="640000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="175"></NameColumnWidth>
-      <ValueColumnWidth column_width="138"></ValueColumnWidth>
+      <ValueColumnWidth column_width="134"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="12" />
    <wvobject fp_name="/test_clk_tb/clk_50m" type="logic">
@@ -72,6 +72,7 @@
    <wvobject fp_name="group18" type="group">
       <obj_property name="label">counter</obj_property>
       <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
       <wvobject fp_name="/test_clk_tb/DUT/u1/u3/en_i" type="logic">
          <obj_property name="ElementShortName">en_i</obj_property>
          <obj_property name="ObjectShortName">en_i</obj_property>
@@ -88,6 +89,7 @@
    <wvobject fp_name="group26" type="group">
       <obj_property name="label">switch event</obj_property>
       <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
       <wvobject fp_name="/test_clk_tb/DUT/u1/u4/sw_i" type="array">
          <obj_property name="ElementShortName">sw_i[9:0]</obj_property>
          <obj_property name="ObjectShortName">sw_i[9:0]</obj_property>
@@ -107,6 +109,7 @@
       <wvobject fp_name="/test_clk_tb/DUT/u1/u4/event_sync_reg" type="array">
          <obj_property name="ElementShortName">event_sync_reg[2:0]</obj_property>
          <obj_property name="ObjectShortName">event_sync_reg[2:0]</obj_property>
+         <obj_property name="isExpanded"></obj_property>
       </wvobject>
       <wvobject fp_name="/test_clk_tb/DUT/u1/u4/EV_CONST" type="array">
          <obj_property name="ElementShortName">EV_CONST[3:0]</obj_property>
@@ -135,14 +138,20 @@
       <wvobject fp_name="/test_clk_tb/DUT/u1/u1/btn_deb" type="array">
          <obj_property name="ElementShortName">btn_deb[3:0]</obj_property>
          <obj_property name="ObjectShortName">btn_deb[3:0]</obj_property>
+         <obj_property name="isExpanded"></obj_property>
       </wvobject>
    </wvobject>
    <wvobject fp_name="group73" type="group">
       <obj_property name="label">debouncer</obj_property>
       <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
       <wvobject fp_name="/test_clk_tb/DUT/u1/u1/u5/rst_i" type="logic">
          <obj_property name="ElementShortName">rst_i</obj_property>
          <obj_property name="ObjectShortName">rst_i</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u1/u5/btn_i" type="logic">
+         <obj_property name="ElementShortName">btn_i</obj_property>
+         <obj_property name="ObjectShortName">btn_i</obj_property>
       </wvobject>
       <wvobject fp_name="/test_clk_tb/DUT/u1/u1/u5/btn_o" type="logic">
          <obj_property name="ElementShortName">btn_o</obj_property>
@@ -155,10 +164,12 @@
       <wvobject fp_name="/test_clk_tb/DUT/u1/u1/u5/sync" type="array">
          <obj_property name="ElementShortName">sync[1:0]</obj_property>
          <obj_property name="ObjectShortName">sync[1:0]</obj_property>
+         <obj_property name="isExpanded"></obj_property>
       </wvobject>
       <wvobject fp_name="/test_clk_tb/DUT/u1/u1/u5/counter" type="array">
          <obj_property name="ElementShortName">counter[1:0]</obj_property>
          <obj_property name="ObjectShortName">counter[1:0]</obj_property>
+         <obj_property name="isExpanded"></obj_property>
       </wvobject>
       <wvobject fp_name="/test_clk_tb/DUT/u1/u1/u5/idle" type="logic">
          <obj_property name="ElementShortName">idle</obj_property>

@@ -24,12 +24,12 @@ module switch_event(
     input       [9:0]   sw_i,                  //Ввод данных c переключателей в обработчик УС
     input               clk_50m,            //Ввод тактового импульса
     input               btn_sync_i,        //Ввод кнопки (эта кнопка одновременно даёт сигнал на заполнение регистра и на проверку на УС)
-    
+    input               rst_i,
     output reg          synced_event_o = 0 //Вывод УС
       );
     
     reg         sw_event = 0;            //регистр уникального события
-    reg  [2:0]  event_sync_reg = 3'b000;     //синхронизирующий регистр 1         
+    reg  [2:0]  event_sync_reg = 3'b000;     //синхронизирующий регистр 1        
     parameter   EV_CONST = 4'd2;
     // Обработчик уникального события (индивидуальное задание)
     // Проверка наличия уникального события в момент изменения содержимого регистра KEY[0]
@@ -53,10 +53,26 @@ module switch_event(
     //Этап 2 - синхронизация Reg_sw_event с btn_sync_i
     //Этот этап требуется чтобы связать синхронизированный с тактовым сигнал Reg_sw_event с импульсом от нажатия кнопки
     //(Превращая постоянный сигнал от обработчика УС в отдельный единичный импульс по нажатию кнопки)
-    always @(posedge btn_sync_i) begin
-        synced_event_o <= event_sync_reg[1] & event_sync_reg[0];
-        #20;
-        synced_event_o <= 1'b0; 
+    reg sync_block;
+    wire event_reg_sum = &event_sync_reg[1:0];
+    always @(posedge clk_50m or posedge rst_i) begin
+        if (rst_i) begin
+            sync_block <= 1'b0;
+            synced_event_o <= 1'b0;
+        end
+        else begin
+            if(event_reg_sum && btn_sync_i && !sync_block) begin
+                synced_event_o <= event_reg_sum;
+                sync_block <= 1'b1;
+            end
+            if(sync_block) begin
+                synced_event_o <= 1'b0;
+            end
+            if(!btn_sync_i && sync_block) begin
+                sync_block <= 1'b0;
+            end
+        end
     end
     //После всех синхронизаций из модуля выходит synced_event
+    
 endmodule

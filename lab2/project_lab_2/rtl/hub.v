@@ -63,6 +63,7 @@ output  [7:0]   counter_o          //Вывод счётчика
     .sw_i            (  sw_i[9:0]     ),
     .clk_50m         (  clk_50m       ),
     .synced_event_o  (  synced_event  ),
+    .rst_i           (  btn_push[4]   ),
     .btn_sync_i      (  btn_push[0]   )
   );
   
