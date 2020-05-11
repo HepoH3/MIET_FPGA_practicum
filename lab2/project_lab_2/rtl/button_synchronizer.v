@@ -24,19 +24,30 @@ module button_synchronizer(
     input        clk_i,
     input        btn_i,
     input        rst_i,
-    output       btn_clk_o
+    output  reg  btn_clk_o
     );
     
-    reg  [1:0]  sync;
-    assign  btn_clk_o = sync[1];
+    reg  sync;
+    reg  sync_block;
     
     always @( posedge clk_i or posedge rst_i ) begin
       if ( rst_i ) begin
-        sync <= 2'b00;
+        sync        <=  1'b0;
+        sync_block  <=  1'b0;
+        btn_clk_o   <=  1'b0;
       end
       else begin
-        sync[0] <= !btn_i;  
-        sync[1] <= sync[0];
+        sync <= !btn_i;
+        if(sync && !sync_block) begin
+          btn_clk_o  <= sync;
+          sync_block  <= 1'b1;
+        end
+        if(sync_block) begin
+          btn_clk_o  <= 1'b0;
+        end
+        if(!sync && sync_block) begin
+          sync_block  <= 1'b0;
+        end
       end
     end
     

@@ -37,36 +37,36 @@ module keys_debounce(
   assign  btn_o[3] = ( btn_clk[3] & ~deb_on_i ) || ( btn_deb[3] & deb_on_i );
   
 // Модули синхронизации кнопок [4:0] btn_i (без функции debounce) 
-    button_synchronizer u1(
-      .btn_i      (  btn_i[0]      ),
-      .rst_i      (  btn_rst_o     ),
-      .btn_clk_o  (  btn_clk[0]    ),
-      .clk_i      (  clk_50m       )  
-    );// Кнопка btn_i[0] или KEY[0]
+  button_synchronizer u1(
+    .btn_i      (  btn_i[0]      ),
+    .rst_i      (  btn_rst_o     ),
+    .btn_clk_o  (  btn_clk[0]    ),
+    .clk_i      (  clk_50m       )  
+  );// Кнопка btn_i[0] или KEY[0]
     
-    button_synchronizer u2(
-      .btn_i      (  btn_i[1]      ),
-      .rst_i      (  btn_rst_o     ),
-      .btn_clk_o  (  btn_clk[1]    ),
-      .clk_i      (  clk_50m       )  
-    );// Кнопка btn_i[1]
+  button_synchronizer u2(
+    .btn_i      (  btn_i[1]      ),
+    .rst_i      (  btn_rst_o     ),
+    .btn_clk_o  (  btn_clk[1]    ),
+    .clk_i      (  clk_50m       )  
+  );// Кнопка btn_i[1]
       
-    button_synchronizer u3(
-      .btn_i      (  btn_i[2]      ),
-      .rst_i      (  btn_rst_o     ),
-      .btn_clk_o  (  btn_clk[2]    ),
-      .clk_i      (  clk_50m       )  
-    );// Кнопка btn_i[2]   
+  button_synchronizer u3(
+    .btn_i      (  btn_i[2]      ),
+    .rst_i      (  btn_rst_o     ),
+    .btn_clk_o  (  btn_clk[2]    ),
+    .clk_i      (  clk_50m       )  
+  );// Кнопка btn_i[2]   
       
-    button_synchronizer u4(
-      .btn_i      (  btn_i[3]      ),
-      .rst_i      (  btn_rst_o     ),
-      .btn_clk_o  (  btn_clk[3]    ),
-      .clk_i      (  clk_50m       )  
-    );// Кнопка btn_i[3]   
+  button_synchronizer u4(
+    .btn_i      (  btn_i[3]      ),
+    .rst_i      (  btn_rst_o     ),
+    .btn_clk_o  (  btn_clk[3]    ),
+    .clk_i      (  clk_50m       )  
+  );// Кнопка btn_i[3]   
         
-    // Инвертер кнопки btn[4]/key1 (aka асинхронный сброс)
-    assign  btn_rst_o  =  ~btn_i[4];  
+  // Инвертер кнопки btn[4]/key1 (aka асинхронный сброс)
+  assign  btn_rst_o  =  ~btn_i[4];  
            
   debouncer u5(
     .btn_i  (  btn_i[0]   ),
