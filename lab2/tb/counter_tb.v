@@ -1,27 +1,27 @@
 `timescale 1ns / 1ps
 
 
-module top_frame_tb();
+module counter_tb();
 
-reg  [9:0]  sw;
+reg  [9:0]  sw_i;
 reg  [1:0]  key_i;
-reg        clk_50;
-wire [9:0]  led_o;
+reg        clk100_i;
+wire [9:0]  ledr_o;
 wire [6:0]  hex0_o;
 wire [6:0]  hex1_o;
 
-top_frame DUT(
-  .sw(sw),
-  .key_i(  key_i  ),
-  .clk_50( clk_50 ),
-  .led_o(  led_o  ),
-  .hex0_o( hex0_o ),
-  .hex1_o( hex1_o )
-);
+counter DUT(
+  .sw_i(     sw_i     ),
+  .key_i(    key_i    ),
+  .clk100_i( clk100_i ),
+  .ledr_o(   ledr_o   ),
+  .hex0_o(   hex0_o   ),
+  .hex1_o(   hex1_o   )
+); 
 
 initial begin 
-  clk_50<=1'b0;
-  forever #11 clk_50<=~clk_50;
+  clk100_i<=1'b0;
+  forever #11 clk100_i<=~clk100_i;
 end
 
 initial begin
@@ -38,10 +38,10 @@ initial begin
 end
 
 initial begin 
-  sw[9:0]<=0;
+  sw_i[9:0]<=0;
   repeat(15) begin
     #9;
-    sw[9:0]<=$random()/100;
+    sw_i[9:0]<=$random()/100;
   end
 end
 

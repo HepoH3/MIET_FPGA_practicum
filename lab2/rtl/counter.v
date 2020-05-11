@@ -2,41 +2,45 @@
 
 
 module counter(
-input            en_i,
-input            clk_i,
-input            rstn_i,
-input      [9:0] sw_i,
-output reg [7:0] counter_o
+  input             clk100_i,
+  input      [9:0]  sw_i,                     
+  input      [1:0]  key_i,                    
+  
+                
+  output     [9:0]  ledr_o,                    
+  output     [6:0]  hex0_o,                    
+  output     [6:0]  hex1_o 
     );
-    
- 
-//reg sw_event;
-//always @( sw_i )begin
-// if ( ( sw_i[0] + sw_i[1] + sw_i[2] + sw_i[3] + sw_i[4] + sw_i[5] + sw_i[6] + sw_i[7] + sw_i[8] + sw_i[9] )> 4'd3 )  sw_event <= 1'b1; 
-// else sw_event <= 1'b0;
-//end 
+
+wire [7:0] counter_value; 
+
+counter_logic counter_logic_elem(
+  .en_i(      key_i[0]      ),
+  .clk_i(     clk100_i      ),
+  .rstn_i(    key_i[1]      ),
+  .sw_i(      sw_i          ),
+  .counter_o( counter_value )
+);
+
+reg_10_bit register(
+  .data_i(     sw_i       ),
+  .clk_i(      clk100_i   ),
+  .rstn_i(     key_i[1]   ),
+  .en_i(       key_i[0]   ),
+  .register_o( ledr_o     )
+);
+
+decoder dec0(
+  .dec_i( counter_value [3:0] ),
+  .hex_o(  hex0_o             )
+);
+
+decoder dec1(
+  .dec_i( counter_value [7:4] ),
+  .hex_o(  hex1_o             )
+);
 
 
-reg [1:0] button_syncroniser;
-wire button_was_pressed;
 
-always @( posedge clk_i or negedge rstn_i ) begin
-  if( !rstn_i )
-    button_syncroniser <= 2'b0;
-  else begin
-    button_syncroniser[0] <= ~en_i;
-    button_syncroniser[1] <= button_syncroniser[0];
-  end
-end
-
-assign button_was_pressed = ~button_syncroniser[1] & button_syncroniser[0];
-
-always@( posedge clk_i or negedge rstn_i )begin
-  if( !rstn_i ) counter_o <= 0; 
-  else if( button_was_pressed ) counter_o <= counter_o + 1;
-end
 
 endmodule
-
-
-
