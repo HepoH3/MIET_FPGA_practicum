@@ -3,6 +3,7 @@ verilog xil_defaultlib  \
 "../../../../../rtl/button_synchronizer.v" \
 "../../../../../rtl/counter_8.v" \
 "../../../../../rtl/debouncer.v" \
+"../../../../../rtl/decoder_8.v" \
 "../../../../../rtl/hub.v" \
 "../../../../../rtl/keys_debounce.v" \
 "../../../../../rtl/mainframe.v" \

@@ -32,6 +32,7 @@ read_verilog -library xil_defaultlib {
   B:/Projects/Vivado/project_lab_2/rtl/button_synchronizer.v
   B:/Projects/Vivado/project_lab_2/rtl/counter_8.v
   B:/Projects/Vivado/project_lab_2/rtl/debouncer.v
+  B:/Projects/Vivado/project_lab_2/rtl/decoder_8.v
   B:/Projects/Vivado/project_lab_2/rtl/hub.v
   B:/Projects/Vivado/project_lab_2/rtl/keys_debounce.v
   B:/Projects/Vivado/project_lab_2/rtl/register_10.v

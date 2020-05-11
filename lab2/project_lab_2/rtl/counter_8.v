@@ -28,7 +28,7 @@ module counter_8(
     );
     
     always @(posedge clk_i or posedge rst_i) begin
-        if (rst_i) counter_o <= 0;
+        if (rst_i) counter_o <= 8'd55;
         else if (en_i) counter_o <= counter_o + 1;
     end
     

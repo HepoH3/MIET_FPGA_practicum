@@ -34,7 +34,7 @@ module switch_event(
     // ќбработчик уникального событи€ (индивидуальное задание)
     // ѕроверка наличи€ уникального событи€ в момент изменени€ содержимого регистра KEY[0]
     always @(sw_i[9:0])
-        if (sw_i[0]+sw_i[1]+sw_i[2]+sw_i[3]+sw_i[4]+sw_i[5]+sw_i[6]+sw_i[7]+sw_i[8]+sw_i[9]>EV_CONST) 
+        if (4'd3>EV_CONST) 
             sw_event = 1'b1; 
         else 
             sw_event = 1'b0;
