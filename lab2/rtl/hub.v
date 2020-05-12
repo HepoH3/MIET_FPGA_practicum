@@ -66,7 +66,7 @@ output  [7:0]   counter_2_o        //Вывод счётчика
     if ( btn_push[4] || synced_event ) begin
       counter_sw_reg[1:0] <= 2'b00;
     end
-    if (btn_push[0] || btn_push[1]) begin
+    if ( btn_push[0] || btn_push[1] ) begin
       counter_sw_reg[0] <= btn_push[0];
       counter_sw_reg[1] <= btn_push[1];
     end

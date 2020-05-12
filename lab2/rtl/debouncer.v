@@ -49,11 +49,11 @@ module debouncer(
     assign btn_o = ~idle & max & ~state_o; 
     
     always @( posedge clk_i ) begin
-      if (idle)
+      if ( idle )
         counter <= 0;
       else begin
         counter <= counter + 1;
-        if (max)
+        if ( max )
           state_o <= ~state_o;
         end
     end
