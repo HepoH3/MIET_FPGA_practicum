@@ -7,12 +7,12 @@ module KEY_Debounce(
     output o_onup
     );
     
-    // sync with clock and combat metastability
+   
     reg sync_0 = 0, sync_1 = 0;
     always @(posedge clk) sync_0 <= i_btn;
     always @(posedge clk) sync_1 <= sync_0;
 
-    // 2.6 ms counter at 50 MHz
+   
     reg [1:0] counter = 2'd0;
     wire idle = (o_state == sync_1);
     wire max = &counter;
