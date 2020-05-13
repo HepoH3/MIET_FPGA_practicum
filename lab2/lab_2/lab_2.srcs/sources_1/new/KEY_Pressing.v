@@ -1,15 +1,14 @@
 `timescale 1ns / 1ps
 
-//Модуль KEY_Pressing (префикс - "KP")
-//Назначение этого модуля - объединять одинаковые обработчики отдельных кнопок в один модуль
+
 module KEY_Pressing(
-  input   [1:0] KP_btn_i,         //Ввод кнопок
-  input         KP_clk50_i,     //Ввод тактового импульса
-  output  [1:0] KP_btn_ondn     //Вывод сигнала о том, что кнопка была НАЖАТА
+  input   [1:0] KP_btn_i,        
+  input         KP_clk50_i,     
+  output  [1:0] KP_btn_ondn     
     );
     
-  wire [1:0]KP_btn_onup;        //Зарезервированный ввод ОТЖАТИЯ кнопок
-  wire [1:0]KP_btn_state;       //Зарезервированный ввод СОСТОЯНИЯ кнопок
+  wire [1:0]KP_btn_onup;        
+  wire [1:0]KP_btn_state;       
         
   KEY_Debounce u1(
     .i_btn   (KP_btn_i[0]),
