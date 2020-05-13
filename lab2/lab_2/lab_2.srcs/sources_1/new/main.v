@@ -24,7 +24,6 @@ module counter(
     .KP_btn_ondn(KS_btn_ondn)
   );
  
-  //¬вод/вывод сигналов от модул€ Register_10 (регистр на 10 позиций)
   Register_10 u2(
     .d(sw_i[9:0]),                 
     .clk(KS_CLK50MHZ),              
@@ -33,7 +32,7 @@ module counter(
     .register(KS_register[9:0])     
   );
   
-  //¬вод/вывод сигналов от модул€ Counter_8 (8-битный счЄтчик)
+  
   Counter_8 u3(
     .clk(KS_CLK50MHZ),
     .rst(KP_btn_i[1]),
