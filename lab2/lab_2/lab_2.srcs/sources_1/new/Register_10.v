@@ -1,13 +1,13 @@
 `timescale 1ns / 1ps
 module Register_10(
-    input      [9:0] d_i,             //Вводимые 10 сигналов
-    input            clk_i,           //Тактовый импульс
-    input            rst_i,           //Сброс регистра в 0
-    input            en_i,            //Сигнал на считывание вводимых сигналов
-    output reg [9:0] register_o       //Вывод значений, запоминаемых регистром
+    input      [9:0] d_i,             
+    input            clk_i,           
+    input            rst_i,           
+    input            en_i,            
+    output reg [9:0] register_o       
     );
   
-  //Обычный блок из 10 D-триггеров  
+  //ГЋГЎГ»Г·Г­Г»Г© ГЎГ«Г®ГЄ ГЁГ§ 10 D-ГІГ°ГЁГЈГЈГҐГ°Г®Гў  
   always @(posedge clk_i or posedge rst_i) begin
       if (rst_i) register_o <= 0;
       else if (en_i) register_o <= d_i;
