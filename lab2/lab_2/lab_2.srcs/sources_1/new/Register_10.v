@@ -6,8 +6,7 @@ module Register_10(
     input            en_i,            
     output reg [9:0] register_o       
     );
-  
-  //Îáû÷íûé áëîê èç 10 D-òðèããåðîâ  
+   
   always @(posedge clk_i or posedge rst_i) begin
       if (rst_i) register_o <= 0;
       else if (en_i) register_o <= d_i;
