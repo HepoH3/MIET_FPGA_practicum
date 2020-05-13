@@ -1,0 +1,261 @@
+/*
+
+Xilinx Vivado v2019.2 (64-bit) [Major: 2019, Minor: 2]
+SW Build: 2708876 on Wed Nov  6 21:40:23 MST 2019
+IP Build: 2700528 on Thu Nov  7 00:09:20 MST 2019
+
+Process ID (PID): 12040
+License: Customer
+
+Current time: 	Wed May 13 20:04:23 MSK 2020
+Time zone: 	Moscow Standard Time (Europe/Moscow)
+
+OS: Windows 10
+OS Version: 10.0
+OS Architecture: amd64
+Available processors (cores): 4
+
+Screen size: 1366x768
+Screen resolution (DPI): 100
+Available screens: 1
+Available disk space: 47 GB
+Default font: family=Dialog,name=Dialog,style=plain,size=12
+
+Java version: 	9.0.4 64-bit
+Java home: 	D:/vivado/Vivado/2019.2/tps/win64/jre9.0.4
+Java executable location: 	D:/vivado/Vivado/2019.2/tps/win64/jre9.0.4/bin/java.exe
+Java initial memory (-Xms): 	128 MB
+Java maximum memory (-Xmx):	 3 GB
+
+
+User name: 	Пользователь
+User home directory: C:/Users/Пользователь
+User working directory: D:/vivado/LABS_PLIS/lab_2
+User country: 	RU
+User language: 	ru
+User locale: 	ru_RU
+
+RDI_BASEROOT: D:/vivado/Vivado
+HDI_APPROOT: D:/vivado/Vivado/2019.2
+RDI_DATADIR: D:/vivado/Vivado/2019.2/data
+RDI_BINDIR: D:/vivado/Vivado/2019.2/bin
+
+Vivado preferences file location: C:/Users/Пользователь/AppData/Roaming/Xilinx/Vivado/2019.2/vivado.xml
+Vivado preferences directory: C:/Users/Пользователь/AppData/Roaming/Xilinx/Vivado/2019.2/
+Vivado layouts directory: C:/Users/Пользователь/AppData/Roaming/Xilinx/Vivado/2019.2/layouts
+PlanAhead jar file location: 	D:/vivado/Vivado/2019.2/lib/classes/planAhead.jar
+Vivado log file location: 	D:/vivado/LABS_PLIS/lab_2/vivado.log
+Vivado journal file location: 	D:/vivado/LABS_PLIS/lab_2/vivado.jou
+Engine tmp dir: 	D:/vivado/LABS_PLIS/lab_2/.Xil/Vivado-12040-DESKTOP-3KTIHVK
+
+Xilinx Environment Variables
+----------------------------
+XILINX: D:/vivado/Vivado/2019.2/ids_lite/ISE
+XILINX_DSP: D:/vivado/Vivado/2019.2/ids_lite/ISE
+XILINX_PLANAHEAD: D:/vivado/Vivado/2019.2
+XILINX_VIVADO: D:/vivado/Vivado/2019.2
+XILINX_VIVADO_HLS: D:/vivado/Vivado/2019.2
+
+
+GUI allocated memory:	128 MB
+GUI max memory:		3,072 MB
+Engine allocated memory: 549 MB
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+
+*/
+
+// TclEventType: START_GUI
+// WARNING: HEventQueue.dispatchEvent() is taking  1175 ms.
+// Tcl Message: start_gui 
+// TclEventType: PROJECT_OPEN_DIALOG
+// [GUI Memory]: 107 MB (+109396kb) [00:00:37]
+// [Engine Memory]: 543 MB (+417909kb) [00:00:37]
+// bB (cr):  Open Project : addNotify
+// WARNING: HEventQueue.dispatchEvent() is taking  1309 ms.
+// Opening Vivado Project: D:\vivado\LABS_PLIS\lab_2\lab_2.xpr. Version: Vivado v2019.2 
+// TclEventType: DEBUG_PROBE_SET_CHANGE
+// Tcl Message: open_project D:/vivado/LABS_PLIS/lab_2/lab_2.xpr 
+// HMemoryUtils.trashcanNow. Engine heap size: 571 MB. GUI used memory: 45 MB. Current time: 5/13/20, 8:04:25 PM MSK
+// TclEventType: MSGMGR_MOVEMSG
+// TclEventType: FILE_SET_NEW
+// TclEventType: RUN_CURRENT
+// TclEventType: PROJECT_DASHBOARD_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_NEW
+// HMemoryUtils.trashcanNow. Engine heap size: 708 MB. GUI used memory: 45 MB. Current time: 5/13/20, 8:04:41 PM MSK
+// Tcl Message: open_project D:/vivado/LABS_PLIS/lab_2/lab_2.xpr 
+// Tcl Message: Scanning sources... Finished scanning sources 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1704] No user IP repositories specified 
+// Tcl Message: INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'D:/vivado/Vivado/2019.2/data/ip'. 
+// TclEventType: PROJECT_NEW
+// [Engine Memory]: 750 MB (+188989kb) [00:01:11]
+// [Engine Memory]: 789 MB (+1541kb) [00:01:23]
+// WARNING: HEventQueue.dispatchEvent() is taking  6182 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 807 MB. GUI used memory: 50 MB. Current time: 5/13/20, 8:05:17 PM MSK
+// Tcl Message: open_project: Time (s): cpu = 00:00:45 ; elapsed = 00:00:52 . Memory (MB): peak = 831.770 ; gain = 251.195 
+// Project name: lab_2; location: D:/vivado/LABS_PLIS/lab_2; part: xc7a100tcsg324-1
+dismissDialog("Open Project"); // bB (cr)
+// WARNING: HEventQueue.dispatchEvent() is taking  1287 ms.
+expandTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Constraints]", 0); // B (F, cr)
+// Tcl Message: update_compile_order -fileset sources_1 
+// Elapsed time: 16 seconds
+expandTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, counter (main.v)]", 1); // B (F, cr)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Simulation, Run Simulation]", 10, false); // u (O, cr)
+selectMenuItem(PAResourceCommand.PACommandNames_SIMULATION_RUN_BEHAVIORAL, "Run Behavioral Simulation"); // ai (ao, cr)
+// Run Command: PAResourceCommand.PACommandNames_SIMULATION_RUN_BEHAVIORAL
+// e (cr):  Run Simulation : addNotify
+// TclEventType: LAUNCH_SIM
+// TclEventType: FILE_SET_OPTIONS_CHANGE
+// Tcl Message: launch_simulation 
+// Tcl Message: Command: launch_simulation  
+// Tcl Message: INFO: [Vivado 12-5682] Launching behavioral simulation in 'D:/vivado/LABS_PLIS/lab_2/lab_2.sim/sim_1/behav/xsim' INFO: [SIM-utils-51] Simulation object is 'sim_1' INFO: [SIM-utils-54] Inspecting design source files for 'counter_tb' in fileset 'sim_1'... INFO: [USF-XSim-97] Finding global include files... INFO: [USF-XSim-98] Fetching design files from 'sim_1'... INFO: [USF-XSim-2] XSim::Compile design 
+// Tcl Message: INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'D:/vivado/LABS_PLIS/lab_2/lab_2.sim/sim_1/behav/xsim' 
+// Tcl Message: "xvlog --incr --relax -prj counter_tb_vlog.prj" 
+// TclEventType: LAUNCH_SIM_LOG
+// Tcl Message: INFO: [USF-XSim-69] 'compile' step finished in '3' seconds INFO: [USF-XSim-3] XSim::Elaborate design INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'D:/vivado/LABS_PLIS/lab_2/lab_2.sim/sim_1/behav/xsim' 
+// Tcl Message: "xelab -wto 4ded4c213a544fa0b989d40cb6abde1b --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot counter_tb_behav xil_defaultlib.counter_tb xil_defaultlib.glbl -log elaborate.log" 
+// TclEventType: LAUNCH_SIM
+// Tcl Message: INFO: [USF-XSim-69] 'elaborate' step finished in '5' seconds INFO: [USF-XSim-99] Step results log file:'D:/vivado/LABS_PLIS/lab_2/lab_2.sim/sim_1/behav/xsim/elaborate.log' 
+// Tcl Message: ERROR: [USF-XSim-62] 'elaborate' step failed with error(s). Please check the Tcl console output or 'D:/vivado/LABS_PLIS/lab_2/lab_2.sim/sim_1/behav/xsim/elaborate.log' file for more information. ERROR: [Vivado 12-4473] Detected error while running simulation. Please correct the issue and retry this operation. 
+// Tcl Message: launch_simulation: Time (s): cpu = 00:00:02 ; elapsed = 00:00:10 . Memory (MB): peak = 853.246 ; gain = 0.000 
+// Tcl Message: ERROR: [Common 17-39] 'launch_simulation' failed due to earlier errors. 
+// CommandFailedException: ERROR: [Common 17-69] Command failed: ERROR: [Common 17-39] 'launch_simulation' failed due to earlier errors.  
+// HOptionPane Error: 'ERROR: [Common 17-39] 'launch_simulation' failed due to earlier errors.  (Run Simulation)'
+// 'd' command handler elapsed time: 21 seconds
+// Elapsed time: 22 seconds
+selectButton("OptionPane.button", "OK"); // JButton (A, G)
+// a (cr): Critical Messages: addNotify
+dismissDialog("Critical Messages"); // a (cr)
+selectTab((HResource) null, (HResource) null, "Log", 2); // aL (aI, cr)
+selectTab((HResource) null, (HResource) null, "Reports", 3); // aL (aI, cr)
+selectTab((HResource) null, (HResource) null, "Tcl Console", 0); // aL (aI, cr)
+selectTab((HResource) null, (HResource) null, "Messages", 1); // aL (aI, cr)
+// PAPropertyPanels.initPanels (main.v) elapsed time: 0.4s
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, counter (main.v)]", 1, true); // B (F, cr) - Node
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, counter (main.v)]", 1, true, false, false, false, false, true); // B (F, cr) - Double Click - Node
+// HMemoryUtils.trashcanNow. Engine heap size: 836 MB. GUI used memory: 52 MB. Current time: 5/13/20, 8:06:22 PM MSK
+// [Engine Memory]: 836 MB (+7597kb) [00:02:40]
+expandTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, counter (main.v)]", 1); // B (F, cr)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, counter (main.v), u1 : KEY_Pressing (KEY_Pressing.v)]", 2, true); // B (F, cr) - Node
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, counter (main.v), u1 : KEY_Pressing (KEY_Pressing.v)]", 2, true); // B (F, cr) - Node
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, counter (main.v), u1 : KEY_Pressing (KEY_Pressing.v), u1 : KEY_Debounce (KEY_Debounce.v)]", 3, false, false, false, false, false, true); // B (F, cr) - Double Click
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, counter (main.v), u1 : KEY_Pressing (KEY_Pressing.v), u1 : KEY_Debounce (KEY_Debounce.v)]", 3, false); // B (F, cr)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, counter (main.v), u1 : KEY_Pressing (KEY_Pressing.v), u1 : KEY_Debounce (KEY_Debounce.v)]", 3, false, false, false, false, false, true); // B (F, cr) - Double Click
+// [GUI Memory]: 112 MB (+103kb) [00:02:54]
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, counter (main.v), u2 : Register_10 (Register_10.v)]", 5, false); // B (F, cr)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, counter (main.v), u2 : Register_10 (Register_10.v)]", 5, false, false, false, false, false, true); // B (F, cr) - Double Click
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, counter (main.v), u3 : Counter_8 (Counter_8.v)]", 6, false); // B (F, cr)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, counter (main.v), u3 : Counter_8 (Counter_8.v)]", 6, false, false, false, false, false, true); // B (F, cr) - Double Click
+expandTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Simulation Sources]", 10); // B (F, cr)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Simulation Sources, sim_1, counter_tb (counter_tb.v)]", 12, true); // B (F, cr) - Node
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Simulation Sources, sim_1, counter_tb (counter_tb.v)]", 12, true, false, false, false, false, true); // B (F, cr) - Double Click - Node
+expandTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Simulation Sources, sim_1, counter_tb (counter_tb.v)]", 12); // B (F, cr)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Simulation Sources, sim_1, counter_tb (counter_tb.v), DUT : counter (main.v)]", 13, true); // B (F, cr) - Node
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Simulation Sources, sim_1, counter_tb (counter_tb.v), DUT : counter (main.v), u2 : Register_10 (Register_10.v)]", 15, false, false, false, false, false, true); // B (F, cr) - Double Click
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Simulation Sources, sim_1, counter_tb (counter_tb.v), DUT : counter (main.v), u1 : KEY_Pressing (KEY_Pressing.v)]", 14, true); // B (F, cr) - Node
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Simulation Sources, sim_1, counter_tb (counter_tb.v), DUT : counter (main.v), u1 : KEY_Pressing (KEY_Pressing.v)]", 14, true, false, false, false, false, true); // B (F, cr) - Double Click - Node
+// HMemoryUtils.trashcanNow. Engine heap size: 858 MB. GUI used memory: 54 MB. Current time: 5/13/20, 8:07:12 PM MSK
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Simulation Sources, sim_1, counter_tb (counter_tb.v), DUT : counter (main.v), u1 : KEY_Pressing (KEY_Pressing.v), u1 : KEY_Debounce (KEY_Debounce.v)]", 15, false); // B (F, cr)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Simulation Sources, sim_1, counter_tb (counter_tb.v), DUT : counter (main.v), u1 : KEY_Pressing (KEY_Pressing.v), u1 : KEY_Debounce (KEY_Debounce.v)]", 15, false, false, false, false, false, true); // B (F, cr) - Double Click
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Simulation Sources, sim_1, counter_tb (counter_tb.v), DUT : counter (main.v), u1 : KEY_Pressing (KEY_Pressing.v), u2 : KEY_Debounce (KEY_Debounce.v)]", 16, false); // B (F, cr)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Simulation Sources, sim_1, counter_tb (counter_tb.v), DUT : counter (main.v), u1 : KEY_Pressing (KEY_Pressing.v), u2 : KEY_Debounce (KEY_Debounce.v)]", 16, false, false, false, false, false, true); // B (F, cr) - Double Click
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Simulation Sources, sim_1, counter_tb (counter_tb.v), DUT : counter (main.v), u2 : Register_10 (Register_10.v)]", 17, false); // B (F, cr)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Simulation Sources, sim_1, counter_tb (counter_tb.v), DUT : counter (main.v), u2 : Register_10 (Register_10.v)]", 17, false, false, false, false, false, true); // B (F, cr) - Double Click
+selectCheckBox(PAResourceItoN.MsgView_INFORMATION_MESSAGES, (String) null, false); // g (aR, cr): FALSE
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Vivado Commands, General Messages, [USF-XSim-62] 'elaborate' step failed with error(s). Please check the Tcl console output or 'D:/vivado/LABS_PLIS/lab_2/lab_2.sim/sim_1/behav/xsim/elaborate.log' file for more information.. ]", 2, false); // ah (O, cr)
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Vivado Commands, General Messages, [USF-XSim-62] 'elaborate' step failed with error(s). Please check the Tcl console output or 'D:/vivado/LABS_PLIS/lab_2/lab_2.sim/sim_1/behav/xsim/elaborate.log' file for more information.. ]", 2, false, false, false, false, false, true); // ah (O, cr) - Double Click
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Vivado Commands, General Messages, [USF-XSim-62] 'elaborate' step failed with error(s). Please check the Tcl console output or 'D:/vivado/LABS_PLIS/lab_2/lab_2.sim/sim_1/behav/xsim/elaborate.log' file for more information.. ]", 2, false); // ah (O, cr)
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Vivado Commands, General Messages, [USF-XSim-62] 'elaborate' step failed with error(s). Please check the Tcl console output or 'D:/vivado/LABS_PLIS/lab_2/lab_2.sim/sim_1/behav/xsim/elaborate.log' file for more information.. ]", 2, false, false, false, false, false, true); // ah (O, cr) - Double Click
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Vivado Commands, General Messages, [USF-XSim-62] 'elaborate' step failed with error(s). Please check the Tcl console output or 'D:/vivado/LABS_PLIS/lab_2/lab_2.sim/sim_1/behav/xsim/elaborate.log' file for more information.. ]", 2, false); // ah (O, cr)
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Vivado Commands, General Messages, [Vivado 12-4473] Detected error while running simulation. Please correct the issue and retry this operation.. ]", 3, false); // ah (O, cr)
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Vivado Commands, General Messages, [Vivado 12-4473] Detected error while running simulation. Please correct the issue and retry this operation.. ]", 3, false, false, false, false, false, true); // ah (O, cr) - Double Click
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Vivado Commands, General Messages, [Vivado 12-4473] Detected error while running simulation. Please correct the issue and retry this operation.. ]", 3, false); // ah (O, cr)
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Simulation, sim_1, [VRFC 10-3180] cannot find port 'hex_on' on this module [D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sim_1/new/counter_tb.v:17]. ]", 6, true); // ah (O, cr) - Node
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Simulation, sim_1, [VRFC 10-3180] cannot find port 'hex_on' on this module [D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sim_1/new/counter_tb.v:17]. , [VRFC 10-3180] cannot find port 'CLK50MHZ' on this module [D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sim_1/new/counter_tb.v:12]. ]", 11, false, false, false, false, false, true); // ah (O, cr) - Double Click
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Simulation, sim_1, [VRFC 10-3180] cannot find port 'hex_on' on this module [D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sim_1/new/counter_tb.v:17]. ]", 6, true); // ah (O, cr) - Node
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Vivado Commands, General Messages]", 1, true, false, false, false, false, true); // ah (O, cr) - Double Click - Node
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Simulation, sim_1, [VRFC 10-3180] cannot find port 'hex_on' on this module [D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sim_1/new/counter_tb.v:17]. ]", 6, true); // ah (O, cr) - Node
+messagesViewCrossProbe(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "src;-;D:\vivado\LABS_PLIS\lab_2\lab_2.srcs\sim_1\new\counter_tb.v;-;;-;16;-;line;-;17;-;;-;16;-;"); // ah (O, cr)
+// Elapsed time: 26 seconds
+selectCodeEditor("counter_tb.v", 83, 100); // ch (w, cr)
+selectCodeEditor("counter_tb.v", 272, 173); // ch (w, cr)
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Simulation, sim_1, [VRFC 10-3180] cannot find port 'hex_on' on this module [D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sim_1/new/counter_tb.v:17]. ]", 6, true); // ah (O, cr) - Node
+messagesViewCrossProbe(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "src;-;D:\vivado\LABS_PLIS\lab_2\lab_2.srcs\sim_1\new\counter_tb.v;-;;-;16;-;line;-;17;-;;-;16;-;"); // ah (O, cr)
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Simulation, sim_1, [VRFC 10-3180] cannot find port 'hex_on' on this module [D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sim_1/new/counter_tb.v:17]. ]", 6, true); // ah (O, cr) - Node
+messagesViewCrossProbe(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "src;-;D:\vivado\LABS_PLIS\lab_2\lab_2.srcs\sim_1\new\counter_tb.v;-;;-;16;-;line;-;17;-;;-;16;-;"); // ah (O, cr)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Simulation, Run Simulation]", 10, false); // u (O, cr)
+selectMenuItem(PAResourceCommand.PACommandNames_SIMULATION_RUN_BEHAVIORAL, "Run Behavioral Simulation"); // ai (ao, cr)
+// Run Command: PAResourceCommand.PACommandNames_SIMULATION_RUN_BEHAVIORAL
+// al (cr): Save Project: addNotify
+selectButton(PAResourceQtoS.SaveProjectUtils_SAVE, "Save"); // a (al)
+// bB (cr):  Save Constraints : addNotify
+// TclEventType: DG_GRAPH_STALE
+// e (cr):  Run Simulation : addNotify
+dismissDialog("Save Project"); // al (cr)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: LAUNCH_SIM
+// TclEventType: FILE_SET_OPTIONS_CHANGE
+// Tcl Message: launch_simulation 
+// Tcl Message: Command: launch_simulation  
+// Tcl Message: INFO: [Vivado 12-5682] Launching behavioral simulation in 'D:/vivado/LABS_PLIS/lab_2/lab_2.sim/sim_1/behav/xsim' INFO: [SIM-utils-51] Simulation object is 'sim_1' INFO: [SIM-utils-54] Inspecting design source files for 'counter_tb' in fileset 'sim_1'... INFO: [USF-XSim-97] Finding global include files... INFO: [USF-XSim-98] Fetching design files from 'sim_1'... INFO: [USF-XSim-2] XSim::Compile design INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'D:/vivado/LABS_PLIS/lab_2/lab_2.sim/sim_1/behav/xsim' 
+// Tcl Message: "xvlog --incr --relax -prj counter_tb_vlog.prj" 
+// TclEventType: LAUNCH_SIM_LOG
+// Tcl Message: INFO: [USF-XSim-69] 'compile' step finished in '2' seconds INFO: [USF-XSim-3] XSim::Elaborate design INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'D:/vivado/LABS_PLIS/lab_2/lab_2.sim/sim_1/behav/xsim' 
+// Tcl Message: "xelab -wto 4ded4c213a544fa0b989d40cb6abde1b --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot counter_tb_behav xil_defaultlib.counter_tb xil_defaultlib.glbl -log elaborate.log" 
+// TclEventType: LAUNCH_SIM
+// Tcl Message: INFO: [USF-XSim-69] 'elaborate' step finished in '3' seconds INFO: [USF-XSim-99] Step results log file:'D:/vivado/LABS_PLIS/lab_2/lab_2.sim/sim_1/behav/xsim/elaborate.log' 
+// Tcl Message: ERROR: [USF-XSim-62] 'elaborate' step failed with error(s). Please check the Tcl console output or 'D:/vivado/LABS_PLIS/lab_2/lab_2.sim/sim_1/behav/xsim/elaborate.log' file for more information. ERROR: [Vivado 12-4473] Detected error while running simulation. Please correct the issue and retry this operation. 
+// Tcl Message: launch_simulation: Time (s): cpu = 00:00:01 ; elapsed = 00:00:06 . Memory (MB): peak = 880.051 ; gain = 0.000 
+// Tcl Message: ERROR: [Common 17-39] 'launch_simulation' failed due to earlier errors. 
+// CommandFailedException: ERROR: [Common 17-69] Command failed: ERROR: [Common 17-39] 'launch_simulation' failed due to earlier errors.  
+// HOptionPane Error: 'ERROR: [Common 17-39] 'launch_simulation' failed due to earlier errors.  (Run Simulation)'
+// 'd' command handler elapsed time: 13 seconds
+// Elapsed time: 11 seconds
+selectButton("OptionPane.button", "OK"); // JButton (A, G)
+// a (cr): Critical Messages: addNotify
+dismissDialog("Critical Messages"); // a (cr)
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Simulation, sim_1, [VRFC 10-3180] cannot find port 'hex_on' on this module [D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sim_1/new/counter_tb.v:17]. ]", 7, true); // ah (O, cr) - Node
+messagesViewCrossProbe(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "src;-;D:\vivado\LABS_PLIS\lab_2\lab_2.srcs\sim_1\new\counter_tb.v;-;;-;16;-;line;-;17;-;;-;16;-;"); // ah (O, cr)
+typeControlKey(null, null, 'z');
+selectCodeEditor("counter_tb.v", 245, 81); // ch (w, cr)
+selectCodeEditor("counter_tb.v", 71, 61); // ch (w, cr)
+selectCodeEditor("counter_tb.v", 68, 77); // ch (w, cr)
+selectCodeEditor("counter_tb.v", 74, 96); // ch (w, cr)
+selectCodeEditor("counter_tb.v", 68, 114); // ch (w, cr)
+selectCodeEditor("counter_tb.v", 74, 125); // ch (w, cr)
+selectCodeEditor("counter_tb.v", 44, 146); // ch (w, cr)
+selectCodeEditor("counter_tb.v", 114, 157); // ch (w, cr)
+selectCodeEditor("counter_tb.v", 70, 116); // ch (w, cr)
+selectCodeEditor("counter_tb.v", 68, 142); // ch (w, cr)
+selectCodeEditor("counter_tb.v", 100, 143); // ch (w, cr)
+selectCodeEditor("counter_tb.v", 100, 108); // ch (w, cr)
+selectCodeEditor("counter_tb.v", 91, 112); // ch (w, cr)
+selectCodeEditor("counter_tb.v", 92, 148); // ch (w, cr)
+selectCodeEditor("counter_tb.v", 116, 142); // ch (w, cr)
+// Elapsed time: 10 seconds
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Vivado Commands, General Messages, [Vivado 12-4473] Detected error while running simulation. Please correct the issue and retry this operation.. ]", 4, false); // ah (O, cr)
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Vivado Commands, General Messages, [Vivado 12-4473] Detected error while running simulation. Please correct the issue and retry this operation.. ]", 4, false, false, false, false, false, true); // ah (O, cr) - Double Click
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Vivado Commands, General Messages, [Vivado 12-4473] Detected error while running simulation. Please correct the issue and retry this operation.. ]", 4, false); // ah (O, cr)
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Vivado Commands, General Messages, [Vivado 12-4473] Detected error while running simulation. Please correct the issue and retry this operation.. ]", 2, false); // ah (O, cr)
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Vivado Commands, General Messages, [USF-XSim-62] 'elaborate' step failed with error(s). Please check the Tcl console output or 'D:/vivado/LABS_PLIS/lab_2/lab_2.sim/sim_1/behav/xsim/elaborate.log' file for more information.. ]", 3, true); // ah (O, cr) - Node
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Vivado Commands, General Messages, [USF-XSim-62] 'elaborate' step failed with error(s). Please check the Tcl console output or 'D:/vivado/LABS_PLIS/lab_2/lab_2.sim/sim_1/behav/xsim/elaborate.log' file for more information.. ]", 3, true, false, false, false, false, true); // ah (O, cr) - Double Click - Node
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Vivado Commands, General Messages, [USF-XSim-62] 'elaborate' step failed with error(s). Please check the Tcl console output or 'D:/vivado/LABS_PLIS/lab_2/lab_2.sim/sim_1/behav/xsim/elaborate.log' file for more information.. ]", 3, true); // ah (O, cr) - Node
+// Elapsed time: 11 seconds
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Vivado Commands, General Messages, [USF-XSim-62] 'elaborate' step failed with error(s). Please check the Tcl console output or 'D:/vivado/LABS_PLIS/lab_2/lab_2.sim/sim_1/behav/xsim/elaborate.log' file for more information.. ]", 3, true); // ah (O, cr) - Node
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Vivado Commands, General Messages, [USF-XSim-62] 'elaborate' step failed with error(s). Please check the Tcl console output or 'D:/vivado/LABS_PLIS/lab_2/lab_2.sim/sim_1/behav/xsim/elaborate.log' file for more information.. ]", 3, true, false, false, false, false, true); // ah (O, cr) - Double Click - Node
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Vivado Commands, General Messages, [USF-XSim-62] 'elaborate' step failed with error(s). Please check the Tcl console output or 'D:/vivado/LABS_PLIS/lab_2/lab_2.sim/sim_1/behav/xsim/elaborate.log' file for more information.. ]", 3, true); // ah (O, cr) - Node
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Vivado Commands, General Messages, [USF-XSim-62] 'elaborate' step failed with error(s). Please check the Tcl console output or 'D:/vivado/LABS_PLIS/lab_2/lab_2.sim/sim_1/behav/xsim/elaborate.log' file for more information.. ]", 3, true); // ah (O, cr) - Node
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Vivado Commands, General Messages, [USF-XSim-62] 'elaborate' step failed with error(s). Please check the Tcl console output or 'D:/vivado/LABS_PLIS/lab_2/lab_2.sim/sim_1/behav/xsim/elaborate.log' file for more information.. ]", 3, true, false, false, false, false, true); // ah (O, cr) - Double Click - Node
