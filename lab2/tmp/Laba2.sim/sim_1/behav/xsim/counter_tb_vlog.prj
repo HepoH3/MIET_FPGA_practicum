@@ -1,0 +1,12 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"../../../../../../../Laba2/rtl/button_debounce.v" \
+"../../../../../rtl/counter.v" \
+"../../../../../rtl/dec_hex.v" \
+"../../../../../tb/counter_tb.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort
