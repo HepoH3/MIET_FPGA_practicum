@@ -1,9 +1,9 @@
 module stopwatch(
-    input clk100_i,
-    input rstn_i,
-    input start_stop_i,
-    input set_i,
-    input change_i,
+    input        clk100_i,
+    input        rstn_i,
+    input        start_stop_i,
+    input        set_i,
+    input        change_i,
     output [6:0] hex0_o,
     output [6:0] hex1_o,
     output [6:0] hex2_o,
@@ -17,22 +17,27 @@ localparam SECONDS_LIMIT = 4'd9;
 localparam TEN_SECONDS_LIMIT = 4'd9;
 
 
-// обработка кнопки старт-стоп
+// start-stop processing
 
 reg [2:0] button_synchroniser;
-wire button_was_pressed;
+wire      button_was_pressed;
 
-always @( posedge clk100_i )
+always @( posedge clk100_i or negedge rstn_i )
   begin
-    button_synchroniser[0] <= ~start_stop_i;
-    button_synchroniser[1] <= button_synchroniser[0];
-    button_synchroniser[2] <= button_synchroniser[1];
+    if ( ~rstn_i )
+      button_synchroniser <= 3'd0;
+    else
+      begin
+        button_synchroniser[0] <= ~start_stop_i;
+        button_synchroniser[1] <= button_synchroniser[0];
+        button_synchroniser[2] <= button_synchroniser[1];
+      end
   end
 
 assign button_was_pressed = ( ~button_synchroniser[2] ) &
                                button_synchroniser[1];
 
-// выработка признака device_running
+// device_running 
 
 reg device_running;
 always @( posedge clk100_i or negedge rstn_i )
@@ -43,11 +48,10 @@ always @( posedge clk100_i or negedge rstn_i )
       device_running <= ~device_running;
   end
 
-// счетчик импульсов
+// pulse counter
 
 reg [19:0] pulse_counter;
-wire hundredth_of_second_passed = 
-  ( pulse_counter == PULSE_LIMIT ); 
+wire       hundredth_of_second_passed = ( pulse_counter == PULSE_LIMIT ); 
   
 always @( posedge clk100_i or negedge rstn_i )
   begin
@@ -63,10 +67,10 @@ always @( posedge clk100_i or negedge rstn_i )
       end;
   end;
   
-// основные счетчики
+// main counters
 
 reg [3:0] hundredth_counter = 4'd0;
-wire tenth_of_second_passed = 
+wire      tenth_of_second_passed = 
   ( ( hundredth_counter == HUNDREDTH_LIMIT ) &
       hundredth_of_second_passed );
       
@@ -78,12 +82,13 @@ always @( posedge clk100_i or negedge rstn_i )
       begin
         if ( tenth_of_second_passed )
           hundredth_counter <= 0;
-        else hundredth_counter <= hundredth_counter + 1;
+        else
+          hundredth_counter <= hundredth_counter + 1;
       end;
   end;
       
 reg [3:0] tenth_counter = 4'd0;
-wire second_passed = 
+wire      second_passed = 
   ( ( tenth_counter == TENTH_LIMIT ) &
       tenth_of_second_passed );
       
@@ -95,12 +100,13 @@ always @( posedge clk100_i or negedge rstn_i )
       begin
         if ( second_passed )
           tenth_counter <= 0;
-        else tenth_counter <= tenth_counter + 1;
+        else 
+          tenth_counter <= tenth_counter + 1;
       end;
   end;      
   
 reg [3:0] second_counter = 4'd0;
-wire ten_second_passed = 
+wire      ten_second_passed = 
   ( ( second_counter == SECONDS_LIMIT ) &
       second_passed );
       
@@ -112,12 +118,13 @@ always @( posedge clk100_i or negedge rstn_i )
       begin
         if ( ten_second_passed )
           second_counter <= 0;
-        else second_counter <= second_counter + 1;
+        else 
+          second_counter <= second_counter + 1;
       end;
   end;   
       
 reg [3:0] ten_second_counter = 4'd0;
-wire minute_passed = 
+wire      minute_passed = 
   ( ( ten_second_counter == 4'd9 ) &
       ten_second_passed );      
       
@@ -129,11 +136,12 @@ always @( posedge clk100_i or negedge rstn_i )
       begin
         if ( ten_second_counter == TEN_SECONDS_LIMIT )
           ten_second_counter <= 0;
-        else ten_second_counter <= ten_second_counter + 1;
+        else 
+          ten_second_counter <= ten_second_counter + 1;
       end;
   end;   
        
-// декодеры для семисегментников   
+// 7-segment display decoders   
     
 hex_decoder dec0 ( 
   .data_i( hundredth_counter  ),
@@ -155,35 +163,45 @@ hex_decoder dec3 (
   .data_o( hex3_o              )
   );      
        
- // обработка кнопок конечного автомата
+ // state machine buttons processing
  
 reg [2:0] set_synchroniser;
-wire set_was_pressed;
+wire      set_was_pressed;
 
-always @( posedge clk100_i )
+always @( posedge clk100_i or negedge rstn_i )
   begin
-    set_synchroniser[0] <= ~set_i;
-    set_synchroniser[1] <= set_synchroniser[0];
-    set_synchroniser[2] <= set_synchroniser[1];
+    if ( ~rstn_i )
+      set_synchroniser <= 3'd0;
+    else
+      begin
+        set_synchroniser[0] <= ~set_i;
+        set_synchroniser[1] <= set_synchroniser[0];
+        set_synchroniser[2] <= set_synchroniser[1];
+      end
   end
 
 assign set_was_pressed = ( ~set_synchroniser[2] ) &
                                set_synchroniser[1];
  
 reg [2:0] change_synchroniser;
-wire change_was_pressed;
+wire      change_was_pressed;
 
-always @( posedge clk100_i )
+always @( posedge clk100_i or negedge rstn_i )
   begin
-    change_synchroniser[0] <= ~change_i;
-    change_synchroniser[1] <= change_synchroniser[0];
-    change_synchroniser[2] <= change_synchroniser[1];
+    if ( ~rstn_i )
+      change_synchroniser <= 3'd0;
+    else
+      begin
+        change_synchroniser[0] <= ~change_i;
+        change_synchroniser[1] <= change_synchroniser[0];
+        change_synchroniser[2] <= change_synchroniser[1];
+      end
   end
 
 assign change_was_pressed = ( ~change_synchroniser[2] ) &
                                change_synchroniser[1];
  
- // конечный автомат
+ // state machine
  
  reg [2:0] state_adjust;
  reg [2:0] next_state_adjust;
