@@ -2,19 +2,19 @@
 
 
 module button_fix(
-  input  clk100_i,
-  input  reset_i,
-  input  key_i,
+  input  clk_i,
+  input  rst_i,
+  input  btn_i,
   output ondn_o);
 
 reg [1:0] sync;
 
-always @( posedge clk100_i or negedge reset_i ) begin
-  if( !reset_i )
+always @( posedge clk_i or negedge rst_i ) begin
+  if( !rst_i )
     sync <= 2'b0;
   else
     begin
-      sync[0] <= key_i;
+      sync[0] <= btn_i;
       sync[1] <= sync[0];
     end
 end
