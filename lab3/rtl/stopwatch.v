@@ -23,7 +23,7 @@ reg  [3:0] hundredths_counter  = 4'd0;
 reg  [3:0] tenths_counter      = 4'd0;
 reg  [3:0] seconds_counter     = 4'd0;
 reg  [3:0] ten_seconds_counter = 4'd0;
-
+wire       device_stopped;
 
 
 //Start-stop button synch
@@ -69,6 +69,7 @@ begin
   if ( btn_start_was_pressed && state_stopwatch == STOPWATCH_DEFAULT ) 
     device_running <= ~device_running;
 end
+assign device_stopped = ~device_running;
 
 // State machine
 always @( * ) 
