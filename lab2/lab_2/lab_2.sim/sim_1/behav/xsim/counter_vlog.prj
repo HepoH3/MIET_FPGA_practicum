@@ -1,0 +1,13 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"../../../../lab_2.srcs/sources_1/new/Counter_8.v" \
+"../../../../lab_2.srcs/sources_1/new/KEY_Debounce.v" \
+"../../../../lab_2.srcs/sources_1/new/KEY_Pressing.v" \
+"../../../../lab_2.srcs/sources_1/new/Register_10.v" \
+"../../../../lab_2.srcs/sources_1/new/main.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

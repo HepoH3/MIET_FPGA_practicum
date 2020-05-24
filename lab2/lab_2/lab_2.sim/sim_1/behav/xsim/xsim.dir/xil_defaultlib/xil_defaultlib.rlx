@@ -1,0 +1,11 @@
+0.6
+2019.2
+Nov  6 2019
+21:57:16
+D:/vivado/LABS_PLIS/lab_2/lab_2.sim/sim_1/behav/xsim/glbl.v,1573089660,verilog,,,,glbl,,,,,,,,
+D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sim_1/new/counter_tb.v,1589389708,verilog,,,,counter_tb,,,,,,,,
+D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sources_1/new/Counter_8.v,1588860814,verilog,,D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sources_1/new/KEY_Debounce.v,,Counter_8,,,,,,,,
+D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sources_1/new/KEY_Debounce.v,1588860686,verilog,,D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sources_1/new/KEY_Pressing.v,,KEY_Debounce,,,,,,,,
+D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sources_1/new/KEY_Pressing.v,1588862682,verilog,,D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sources_1/new/Register_10.v,,KEY_Pressing,,,,,,,,
+D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sources_1/new/Register_10.v,1588862682,verilog,,D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sources_1/new/main.v,,Register_10,,,,,,,,
+D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sources_1/new/main.v,1588862682,verilog,,D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sim_1/new/counter_tb.v,,counter,,,,,,,,

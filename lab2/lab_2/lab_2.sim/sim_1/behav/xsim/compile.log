@@ -1,0 +1,15 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sources_1/new/Counter_8.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Counter_8
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sources_1/new/KEY_Debounce.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module KEY_Debounce
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sources_1/new/KEY_Pressing.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module KEY_Pressing
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sources_1/new/Register_10.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Register_10
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sources_1/new/main.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module counter
+INFO: [VRFC 10-2458] undeclared symbol KS_CLK50MHZ, assumed default net type wire [D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sources_1/new/main.v:23]
+INFO: [VRFC 10-2458] undeclared symbol KS_btn_ondn, assumed default net type wire [D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sources_1/new/main.v:24]
+INFO: [VRFC 10-2458] undeclared symbol KS_synced_event, assumed default net type wire [D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sources_1/new/main.v:40]
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/vivado/LABS_PLIS/lab_2/lab_2.srcs/sim_1/new/counter_tb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module counter_tb
