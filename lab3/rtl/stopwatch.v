@@ -14,6 +14,7 @@ module stopwatch(
 
 localparam  STOPWATCH_DEFAULT  = 1'd0;
 localparam  STOPWATCH_SET      = 1'd1;
+localparam  COUNTER_MAX        = 4'd9;
 
 reg         device_running     = 1'b0;
 reg         state_stopwatch    = STOPWATCH_DEFAULT;
@@ -148,7 +149,7 @@ end
 
 //00.01
 wire  tenths_of_second_passed = 
-        ( ( hundredths_counter == 4'd9 ) & hundredths_of_second_passed );
+        ( ( hundredths_counter == COUNTER_MAX ) & hundredths_of_second_passed );
 
 always @( posedge clk100_i or negedge rstn_i ) begin
   if ( !rstn_i ) 
@@ -165,7 +166,7 @@ end
 
 // 00.10
 wire  second_passed = 
-        ( ( tenths_counter == 4'd9 ) & tenths_of_second_passed );
+        ( ( tenths_counter == COUNTER_MAX ) & tenths_of_second_passed );
 
 always @( posedge clk100_i or negedge rstn_i ) begin
   if ( !rstn_i ) 
@@ -182,7 +183,7 @@ end
 
 //01.00
 wire  ten_seconds_passed = 
-        ( ( seconds_counter == 4'd9 ) & second_passed );
+        ( ( seconds_counter == COUNTER_MAX ) & second_passed );
 
 always @( posedge clk100_i or negedge rstn_i ) begin
   if ( !rstn_i ) 
