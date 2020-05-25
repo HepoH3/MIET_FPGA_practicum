@@ -17,7 +17,7 @@ always @( posedge clk100_i or negedge rstn_i ) begin
     btn_sync[2] <= 0;
   end
   else begin
-    btn_sync[0] <= en_i;
+    btn_sync[0] <= ~en_i;
     btn_sync[1] <= btn_sync[0];
     btn_sync[2] <= btn_sync[1];
   end
