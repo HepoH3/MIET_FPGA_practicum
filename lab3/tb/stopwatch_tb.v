@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module stopwatch_tp(
+module stopwatch_tb(
 );
 localparam CLK_FREQ_MHZ   = 50;
 localparam CLK_SEMIPERIOD = ( 1000 / CLK_FREQ_MHZ) / 2;     
