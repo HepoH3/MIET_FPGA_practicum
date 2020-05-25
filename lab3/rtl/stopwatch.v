@@ -56,18 +56,18 @@ always @( posedge clk100_i or negedge rstn_i ) begin
 end
 
 // Hundredth of second
-reg  [16:0] pulse_counter;
+reg  [18:0] pulse_counter;
 wire        hundredth_of_second_passed;
 
-assign hundredth_of_second_passed = ( pulse_counter == 17'd259999 );
+assign hundredth_of_second_passed = ( pulse_counter == 19'd499999 );
 
 always @( posedge clk100_i or negedge rstn_i ) begin
   if( !rstn_i )
-    pulse_counter <= 17'd0;
+    pulse_counter <= 19'd0;
   else
     if( device_running || hundredth_of_second_passed )
       if( hundredth_of_second_passed )
-        pulse_counter <= 17'd0;
+        pulse_counter <= 19'd0;
       else
         pulse_counter <= pulse_counter + 1;
 end
