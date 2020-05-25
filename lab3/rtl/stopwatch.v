@@ -1,24 +1,3 @@
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 24.05.2020 13:38:11
-// Design Name: 
-// Module Name: stopwatch
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
 module stopwatch(
   input          clk100_i,
   input          rstn_i,
@@ -30,28 +9,28 @@ module stopwatch(
   output  [6:0]  hex2_o,
   output  [6:0]  hex3_o
   );
-  
-  // Число, на котором счётчик остановится (для counter_4) 
-  // (т.е. при 10 он досчитает до 9 и остановится до сброса)
-  // Или
-  // Число, на котором счётчик сбросится (для reset_block)
-  // (т.е. при 10 он досчитает до 9 и образовавшийся сигнал сброса прибавит 1 к старшему счётчику и сбросит переполнившийся)
-  parameter  BIT_DEPTH_OF_CLOCK = 4'd10; 
-  
-  // Число для таймера ms10_timer для отсчёта ровно 10мс на частоте 100МГц
+
+  // пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ counter_4)
+  // (пїЅ.пїЅ. пїЅпїЅпїЅ 10 пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ 9 пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)
+  // пїЅпїЅпїЅ
+  // пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ reset_block)
+  // (пїЅ.пїЅ. пїЅпїЅпїЅ 10 пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ 9 пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 1 пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+  parameter  BIT_DEPTH_OF_CLOCK = 4'd10;
+
+  // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ ms10_timer пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ 10пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ 100пїЅпїЅпїЅ
   parameter  TIME_LIMIT_10ms = 20'b11110100001000111111;
-  
+
   wire         start_stop_s_reg;
   wire         set_s;
   wire         change_s;
   wire         rstn_s;
   wire  [2:0]  main_selector;
-  
-  wire  [3:0]  ms10_counter; 
-  wire  [3:0]  ms100_counter; 
+
+  wire  [3:0]  ms10_counter;
+  wire  [3:0]  ms100_counter;
   wire  [3:0]  s1_counter;
-  wire  [3:0]  s10_counter;  
-    
+  wire  [3:0]  s10_counter;
+
   key_processing io(
     .clk100_i            (  clk100_i            ),
     .rstn_i              (  rstn_i              ),
@@ -64,7 +43,7 @@ module stopwatch(
     .change_s_o          (  change_s            ),
     .rstn_s_o            (  rstn_s              )
   );
-  
+
   mode_selector switching(
     .clk100_i           (  clk100_i          ),
     .rstn_s_i           (  rstn_s            ),
@@ -72,7 +51,7 @@ module stopwatch(
     .set_s_i            (  set_s             ),
     .main_selector_o    (  main_selector     )
   );
-  
+
   counter_array counting(
     .clk100_i            (  clk100_i                 ),
     .rstn_s_i            (  rstn_s                   ),
@@ -86,25 +65,25 @@ module stopwatch(
     .s1_counter_o        (  s1_counter[3:0]          ),
     .s10_counter_o       (  s10_counter[3:0]         )
   );
-  
+
   decoder_4 ms10_dec (
     .bit4_i     (  ms10_counter[3:0]  ),
     .segment_o  (  hex0_o[6:0]        )
   );
-  
+
   decoder_4 ms100_dec (
     .bit4_i     (  ms100_counter[3:0]  ),
     .segment_o  (  hex1_o[6:0]         )
   );
-  
+
   decoder_4 s1_dec (
     .bit4_i     (  s1_counter[3:0]  ),
     .segment_o  (  hex2_o[6:0]      )
   );
-  
+
   decoder_4 s10_dec (
     .bit4_i     (  s10_counter[3:0]  ),
     .segment_o  (  hex3_o[6:0]       )
   );
-  
+
 endmodule
