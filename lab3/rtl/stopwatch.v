@@ -11,40 +11,37 @@ module stopwatch(
   output [6:0] hex2_o,
   output [6:0] hex3_o
 );
-localparam STATE_DEFAULT = 3'd0;
-localparam STATE_1       = 3'd1;
-localparam STATE_2       = 3'd2;
-localparam STATE_3       = 3'd3;
-localparam STATE_4       = 3'd4;
-localparam PULSE_MAX     = 18'd259999;
-localparam COUNTER_MAX   = 4'd9;
-reg [1:0] btn_set_syncroniser;
-reg [1:0] btn_change_syncroniser;
-reg [1:0] btn_start_stop_sync;
-reg [2:0] state = STATE_DEFAULT;
-reg [2:0] next_state;
-reg       device_running = 1'd0;
-wire      btn_change_was_pressed;
-wire      btn_set_was_pressed;
-wire      btn_start_stop_was_pressed;
-always @( posedge clk100_i )
-begin
-  btn_start_stop_sync[0] <= ~start_stop_i;
-  btn_start_stop_sync[1] <= btn_start_stop_sync[0];
-end
-assign btn_start_stop_was_pressed = ~btn_start_stop_sync[1] & btn_start_stop_sync[0];
-always @( posedge clk100_i )
-begin
-  btn_set_syncroniser[0] <= ~set_i;
-  btn_set_syncroniser[1] <= btn_set_syncroniser[0];
-end
-assign btn_set_was_pressed = ~btn_set_syncroniser[1] & btn_set_syncroniser[0];
-always @( posedge clk100_i )
-begin
-  btn_change_syncroniser[0] <= ~change_i;
-  btn_change_syncroniser[1] <= btn_change_syncroniser[0];
-end
-assign btn_change_was_pressed = ~btn_change_syncroniser[1] & btn_change_syncroniser[0];
+  localparam STATE_DEFAULT = 3'd0;
+  localparam STATE_1       = 3'd1;
+  localparam STATE_2       = 3'd2;
+  localparam STATE_3       = 3'd3;
+  localparam STATE_4       = 3'd4;
+  localparam PULSE_MAX     = 18'd259999;
+  localparam COUNTER_MAX   = 4'd9;
+  reg [2:0] state = STATE_DEFAULT;
+  reg [2:0] next_state;
+  reg       device_running = 1'd0;
+  wire      btn_change_was_pressed;
+  wire      btn_set_was_pressed;
+  wire      btn_start_stop_was_pressed;
+button start_stop(
+  .in                 ( start_stop_i ),
+  .rstn               ( rstn_i ),
+  .clk                ( clk100_i ),
+  .button_was_pressed ( btn_start_stop_was_pressed )
+);
+button set(
+  .in                 ( set_i ),
+  .rstn               ( rstn_i ),
+  .clk                ( clk100_i ),
+  .button_was_pressed ( btn_set_was_pressed )
+); 
+button change(
+  .in                 ( change_i ),
+  .rstn               ( rstn_i ),
+  .clk                ( clk100_i ),
+  .button_was_pressed ( btn_change_was_pressed )
+); 
 always @( posedge clk100_i )
 begin
   if ( btn_start_stop_was_pressed && state == STATE_DEFAULT ) 
@@ -67,7 +64,7 @@ always @( posedge clk100_i or negedge rstn_i ) begin
          if ( tenth_of_second_passed ) hundredths_counter <= 0;
        else hundredths_counter <= hundredths_counter + 1;
 end
-reg [3:0] tenths_counter = 4'd0;
+reg [3:0] tenths_counter = 0;
 wire      second_passed  = ( ( tenths_counter == COUNTER_MAX ) & tenth_of_second_passed );
 
 always @( posedge clk100_i or negedge rstn_i ) begin
@@ -182,78 +179,20 @@ always @( posedge clk100_i or negedge rstn_i )
    else
      state <= next_state;
 end
-reg [6:0] decoder_ten_seconds;
-always @( * ) begin
-  case ( ten_seconds_counter )      
-    4'd0    : decoder_ten_seconds = 7'b100_0000;
-    4'd1    : decoder_ten_seconds = 7'b111_1001;
-    4'd2    : decoder_ten_seconds = 7'b010_0100;
-    4'd3    : decoder_ten_seconds = 7'b011_0000;
-    4'd4    : decoder_ten_seconds = 7'b001_1001;
-    4'd5    : decoder_ten_seconds = 7'b001_0010;
-    4'd6    : decoder_ten_seconds = 7'b000_0010;
-    4'd7    : decoder_ten_seconds = 7'b111_1000;
-    4'd8    : decoder_ten_seconds = 7'b000_0000;
-    4'd9    : decoder_ten_seconds = 7'b001_0000;
-    default : decoder_ten_seconds = 7'b000_0000;
-  endcase
-end
-assign hex3_o = decoder_ten_seconds;
-
-
-reg [6:0] decoder_seconds;
-always @( * ) begin
-  case ( seconds_counter )      
-    4'd0    : decoder_seconds = 7'b100_0000;
-    4'd1    : decoder_seconds = 7'b111_1001;
-    4'd2    : decoder_seconds = 7'b010_0100;
-    4'd3    : decoder_seconds = 7'b011_0000;
-    4'd4    : decoder_seconds = 7'b001_1001;
-    4'd5    : decoder_seconds = 7'b001_0010;
-    4'd6    : decoder_seconds = 7'b000_0010;
-    4'd7    : decoder_seconds = 7'b111_1000;
-    4'd8    : decoder_seconds = 7'b000_0000;
-    4'd9    : decoder_seconds = 7'b001_0000;
-    default : decoder_seconds = 7'b000_0000;
-  endcase
-end
-assign hex2_o = decoder_seconds;
-
-
-reg [6:0] decoder_tenths;
-always @( * ) begin
-  case ( tenths_counter )      
-    4'd0    : decoder_tenths = 7'b100_0000;
-    4'd1    : decoder_tenths = 7'b111_1001;
-    4'd2    : decoder_tenths = 7'b010_0100;
-    4'd3    : decoder_tenths = 7'b011_0000;
-    4'd4    : decoder_tenths = 7'b001_1001;
-    4'd5    : decoder_tenths = 7'b001_0010;
-    4'd6    : decoder_tenths = 7'b000_0010;
-    4'd7    : decoder_tenths = 7'b111_1000;
-    4'd8    : decoder_tenths = 7'b000_0000;
-    4'd9    : decoder_tenths = 7'b001_0000;
-    default : decoder_tenths = 7'b000_0000;
-  endcase
-end
-assign hex1_o = decoder_tenths;
-
-
-reg [6:0] decoder_hundredths;
-always @( * ) begin
-  case ( hundredths_counter )      
-    4'd0    : decoder_hundredths = 7'b100_0000;
-    4'd1    : decoder_hundredths = 7'b111_1001;
-    4'd2    : decoder_hundredths = 7'b010_0100;
-    4'd3    : decoder_hundredths = 7'b011_0000;
-    4'd4    : decoder_hundredths = 7'b001_1001;
-    4'd5    : decoder_hundredths = 7'b001_0010;
-    4'd6    : decoder_hundredths = 7'b000_0010;
-    4'd7    : decoder_hundredths = 7'b111_1000;
-    4'd8    : decoder_hundredths = 7'b000_0000;
-    4'd9    : decoder_hundredths = 7'b001_0000;
-    default : decoder_hundredths = 7'b000_0000;
-  endcase
-end
-assign hex0_o = decoder_hundredths;
+hex dec0(
+  .in  ( hundredths_counter ),
+  .out ( hex0_o             ) 
+);
+hex dec1(
+  .in  ( tenths_counter ),
+  .out ( hex1_o         ) 
+);
+hex dec2(
+  .in  ( seconds_counter ),
+  .out ( hex2_o          ) 
+);
+hex dec3(
+  .in  ( seconds_counter ),
+  .out ( hex3_o          ) 
+);
 endmodule
