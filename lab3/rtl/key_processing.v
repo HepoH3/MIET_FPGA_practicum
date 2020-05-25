@@ -21,15 +21,16 @@
 
 
 module key_processing(
-  input        clk100_i,
-  input        rstn_i,
-  input        start_stop_i,
-  input        set_i,
-  input        change_i,
-  output  reg  start_stop_s_reg_o,
-  output       set_s_o,
-  output       change_s_o,
-  output       rstn_s_o
+  input               clk100_i,
+  input               rstn_i,
+  input               start_stop_i,
+  input               set_i,
+  input               change_i,
+  input        [2:0]  main_selector_i,
+  output  reg         start_stop_s_reg_o,
+  output              set_s_o,
+  output              change_s_o,
+  output              rstn_s_o
   );
   
   assign  rstn_s_o  =  ~rstn_i;  
@@ -45,10 +46,10 @@ module key_processing(
     if( rstn_s_o ) begin
       start_stop_s_reg_o <= 0;
     end
-    else if( ~start_stop_s_reg_o & start_stop_s_o ) begin
+    else if( ~start_stop_s_reg_o & start_stop_s_o & ( main_selector_i == 3'b000) ) begin
       start_stop_s_reg_o <= 1;
     end
-    else if( start_stop_s_reg_o & start_stop_s_o ) begin
+    else if( start_stop_s_reg_o & start_stop_s_o & ( main_selector_i == 3'b000) ) begin
       start_stop_s_reg_o <= 0;
     end    
   end

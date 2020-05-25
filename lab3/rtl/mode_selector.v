@@ -33,7 +33,7 @@ module mode_selector(
   assign selecting_input = ~start_stop_s_reg_i & set_s_i;
   
   always @( posedge clk100_i or posedge rstn_s_i ) begin
-    if( rstn_s_i || start_stop_s_reg_i) begin
+    if( rstn_s_i ) begin
       main_selector_o <= 3'b000;
     end
     else if( selecting_input && !( main_selector_o[2:0] >= NUM_OF_HEX ) ) begin

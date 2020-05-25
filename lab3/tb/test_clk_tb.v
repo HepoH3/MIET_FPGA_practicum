@@ -61,16 +61,64 @@ module test_clk_tb;
    #20;
    
    rstn = 1'b0;
-   #10;
+   #20;
    rstn = 1'b1;
    
    #20; 
+   
+   set = 1'b0;
+   #20;
+   set = 1'b1;
+   
+   #20;
     
    start_stop = 1'b0;
    #20;
    start_stop = 1'b1;
    
-   #10000000; 
+   #20; 
+   
+   set = 1'b0;
+   #20;
+   set = 1'b1;
+   
+   #20; 
+   
+   change = 1'b0;
+   #20;
+   change = 1'b1;
+   
+   #20;
+   
+   set = 1'b0;
+   #20;
+   set = 1'b1;
+   
+   #20; 
+   
+   change = 1'b0;
+   #20;
+   change = 1'b1;
+   
+   #20;
+   
+   set = 1'b0;
+   #20;
+   set = 1'b1;
+   
+   #20; 
+   
+   set = 1'b0;
+   #20;
+   set = 1'b1;
+   
+   #1000;
+   
+   start_stop = 1'b0;
+   #20;
+   start_stop = 1'b1;
+   
+   #20000000; 
    
    start_stop = 1'b0;
    #20;

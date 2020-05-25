@@ -24,15 +24,15 @@ module counter_4(
     input               en_i,         //Сигнал на включение счётчика 
     input               rst_i,        //Сброс счётчика в 0
     input               count_rst_i,  //Сброс счётчика в 0
+    //Число, на котором счётчик остановится (т.е. при 10 он досчитает до 9 и следующий сигнал пойдёт на старший счётчик)
+    input        [3:0]  BDOC,
     output  reg  [3:0]  counter_o     //Вывод значения счётчика (4 бит)
     );
-
-    parameter BIT_DEPTH_OF_CLOCK = 4'd10;
        
     always @( posedge rst_i or posedge count_rst_i or posedge en_i) begin
       if ( rst_i || count_rst_i ) 
         counter_o <= 4'd0;
-      else if ( en_i && counter_o < BIT_DEPTH_OF_CLOCK ) 
+      else if ( en_i && counter_o < BDOC ) 
         counter_o <= counter_o + 1;
     end
     

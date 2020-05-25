@@ -19,7 +19,6 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-
 module stopwatch(
   input          clk100_i,
   input          rstn_i,
@@ -31,6 +30,16 @@ module stopwatch(
   output  [6:0]  hex2_o,
   output  [6:0]  hex3_o
   );
+  
+  // Число, на котором счётчик остановится (для counter_4) 
+  // (т.е. при 10 он досчитает до 9 и остановится до сброса)
+  // Или
+  // Число, на котором счётчик сбросится (для reset_block)
+  // (т.е. при 10 он досчитает до 9 и образовавшийся сигнал сброса прибавит 1 к старшему счётчику и сбросит переполнившийся)
+  parameter  BIT_DEPTH_OF_CLOCK = 4'd10; 
+  
+  // Число для таймера ms10_timer для отсчёта ровно 10мс на частоте 100МГц
+  parameter  TIME_LIMIT_10ms = 20'b11110100001000111111;
   
   wire         start_stop_s_reg;
   wire         set_s;
@@ -44,15 +53,16 @@ module stopwatch(
   wire  [3:0]  s10_counter;  
     
   key_processing io(
-    .clk100_i           (  clk100_i          ),
-    .rstn_i             (  rstn_i            ),
-    .start_stop_i       (  start_stop_i      ),
-    .set_i              (  set_i             ),
-    .change_i           (  change_i          ),
-    .start_stop_s_reg_o (  start_stop_s_reg  ),
-    .set_s_o            (  set_s             ),
-    .change_s_o         (  change_s          ),
-    .rstn_s_o           (  rstn_s            )
+    .clk100_i            (  clk100_i            ),
+    .rstn_i              (  rstn_i              ),
+    .start_stop_i        (  start_stop_i        ),
+    .set_i               (  set_i               ),
+    .change_i            (  change_i            ),
+    .start_stop_s_reg_o  (  start_stop_s_reg    ),
+    .main_selector_i     (  main_selector[2:0]  ),
+    .set_s_o             (  set_s               ),
+    .change_s_o          (  change_s            ),
+    .rstn_s_o            (  rstn_s              )
   );
   
   mode_selector switching(
@@ -64,15 +74,17 @@ module stopwatch(
   );
   
   counter_array counting(
-    .clk100_i           (  clk100_i            ),
-    .rstn_s_i           (  rstn_s              ),
-    .start_stop_s_reg_i (  start_stop_s_reg    ),
-    .change_s_i         (  change_s            ),
-    .main_selector_i    (  main_selector[2:0]  ),
-    .ms10_counter_o     (  ms10_counter[3:0]   ),
-    .ms100_counter_o    (  ms100_counter[3:0]  ),
-    .s1_counter_o       (  s1_counter[3:0]     ),
-    .s10_counter_o      (  s10_counter[3:0]    )
+    .clk100_i            (  clk100_i                 ),
+    .rstn_s_i            (  rstn_s                   ),
+    .start_stop_s_reg_i  (  start_stop_s_reg         ),
+    .change_s_i          (  change_s                 ),
+    .BIT_DEPTH_OF_CLOCK  (  BIT_DEPTH_OF_CLOCK[3:0]  ),
+    .TIME_LIMIT_10ms     (  TIME_LIMIT_10ms[19:0]    ),
+    .main_selector_i     (  main_selector[2:0]       ),
+    .ms10_counter_o      (  ms10_counter[3:0]        ),
+    .ms100_counter_o     (  ms100_counter[3:0]       ),
+    .s1_counter_o        (  s1_counter[3:0]          ),
+    .s10_counter_o       (  s10_counter[3:0]         )
   );
   
   decoder_4 ms10_dec (
