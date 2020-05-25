@@ -246,23 +246,23 @@ always @( posedge clk100_i or negedge rstn_i )
 
 //hex0-hex3 desc   
  hex hex0 ( 
-  .in ( hundredth_counter  ),
-  .out( hex0_o             )
+  .in  ( hundredth_counter  ),
+  .out ( hex0_o             )
   );
   
 hex hex1 ( 
-  .in ( tenth_counter  ),
-  .out( hex1_o         )
+  .in  ( tenth_counter  ),
+  .out ( hex1_o         )
   );
   
 hex hex2 ( 
-  .in ( second_counter  ),
-  .out( hex2_o          )
+  .in  ( second_counter  ),
+  .out ( hex2_o          )
   );
   
 hex hex3 ( 
-  .in ( tenth_second_counter  ),
-  .out( hex3_o              )
+  .in  ( tenth_second_counter ),
+  .out (  hex3_o              )
   ); 
        
 endmodule
