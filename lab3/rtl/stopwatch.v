@@ -10,9 +10,11 @@ module stopwatch #(
 (
   input clk100_i,
   input rstn_i,
+  
   input start_stop_i,
   input set_i,
   input change_i,
+  
   output [6:0] hex0_o,
   output [6:0] hex1_o,
   output [6:0] hex2_o,
@@ -27,83 +29,58 @@ localparam CHANGING_T  = 3'd4;
  
  
  
- // Часть I - синхронизация обработки
- // нажатия кнопки «СтартСтоп»/
-reg [2:0] button_syncroniser;
-wire button_was_pressed;
 
-always @( posedge clk100_i or negedge rstn_i ) begin
-  if ( !rstn_i ) begin
-    button_syncroniser[0] <= 1'b0;
-    button_syncroniser[1] <= 1'b0;
-    button_syncroniser[2] <= 1'b0;
-  end
-  else begin
-    button_syncroniser[0] <= start_stop_i;
-    button_syncroniser[1] <= button_syncroniser[0];
-    button_syncroniser[2] <= button_syncroniser[1];
-  end
-end
 
-assign button_was_pressed = ~ button_syncroniser[2] && button_syncroniser[1];
+wire start_stop_w_p;
+
+debouncer d_for_start_stop(
+  .clk100_i ( clk100_i       ),
+  .rstn_i   ( rstn_i         ),
+  .signal_i ( start_stop_i   ),
+  .synced_o ( start_stop_w_p )
+  );
 
 
 
-reg [2:0] set_sync;
-wire set_was_pressed;
 
-always @( posedge clk100_i or negedge rstn_i ) begin
-  if ( !rstn_i ) begin
-    set_sync[0] <= 1'b0;
-    set_sync[1] <= 1'b0;
-    set_sync[2] <= 1'b0;
-  end
-  else begin
-    set_sync[0] <= set_i;
-    set_sync[1] <= set_sync[0];
-    set_sync[2] <= set_sync[1];
-  end
-end
+wire set_w_p;
 
-assign set_was_pressed = ~ set_sync[2] && set_sync[1];
+debouncer d_for_set(
+  .clk100_i ( clk100_i ),
+  .rstn_i   ( rstn_i   ),
+  .signal_i ( set_i    ),
+  .synced_o ( set_w_p  )
+  );
 
 
-reg [2:0] change_sync;
-wire change_was_pressed;
-
-always @( posedge clk100_i or negedge rstn_i ) begin
-  if ( !rstn_i ) begin
-    change_sync[0] <= 1'b0;
-    change_sync[1] <= 1'b0;
-    change_sync[2] <= 1'b0;
-  end
-  else begin
-    change_sync[0] <= change_i;
-    change_sync[1] <= change_sync[0];
-    change_sync[2] <= change_sync[1];
-  end
-end
-
-assign change_was_pressed = ~ change_sync[2] && change_sync[1];
 
 
- // Часть II - выработка признака «device_running »
- // Самостоятельная работа студента!
+wire change_w_p;
+
+debouncer d_for_change(
+  .clk100_i ( clk100_i   ),
+  .rstn_i   ( rstn_i     ),
+  .signal_i ( change_i   ),
+  .synced_o ( change_w_p )
+  );
+
+
 reg device_running;
 
 always @( posedge clk100_i or negedge rstn_i ) begin
   if( !rstn_i )
     device_running <= 1'b0;
-  if ( passed_all )
+  else begin
+    if ( passed_all )
       device_running <= 1'b1;
   else if ( fsm_state == IDLE )
-    if ( button_was_pressed )
+    if ( start_stop_w_p )
       device_running <= ~device_running;
+  end
 end
 
 
- // Часть III - счётчик импульсов
- // и признак истечения 0,01 сек
+
 reg [16:0] pulse_counter;
 
 wire hundredth_of_second_passed;
@@ -120,7 +97,6 @@ always @(posedge clk100_i or negedge rstn_i ) begin
 end
 
 
- // Часть IV - основные счётчики
 reg [3:0] hundredths_counter;
 wire tenth_of_second_passed;
 assign tenth_of_second_passed = ( ( hundredths_counter == HUNS_MAX ) && hundredth_of_second_passed );
@@ -189,9 +165,7 @@ end
 
 
 
-// Часть V - дешифраторы для отображения
-// содержимого основных регистров
-// на семисегментных индикаторах
+
 
 dec_to_hex to_hex3(
   .dec_i ( ten_seconds_counter ),
@@ -223,26 +197,16 @@ wire       passed_all;
 
 
 stopw_finstate fsm(
-  .clk_i        ( clk100_i           ),
-  .rstn_i       ( rstn_i             ),
-  .dev_run_i    ( device_running     ),
-  .set_i        ( set_was_pressed    ),
-  .change_i     ( change_was_pressed ),
-  .state_value_o( fsm_state          ),
-  .inc_this_o   ( increment          ),
-  .passed_all   ( passed_all         )
+  .clk_i         ( clk100_i       ),
+  .rstn_i        ( rstn_i         ),
+  .dev_run_i     ( device_running ),
+  .set_i         ( set_w_p        ),
+  .change_i      ( change_w_p     ),
+  .state_value_o ( fsm_state      ),
+  .inc_this_o    ( increment      ),
+  .passed_all    ( passed_all     )
 );
 
-//always @( * ) begin
-//  if ( fsm_state != IDLE )
-//    if( increment )
-//      case ( fsm_state )
-//        CHANGING_T  : ten_seconds_counter <= ten_seconds_counter + 1;
-//        CHANGING_S  : seconds_counter     <= seconds_counter     + 1;
-//        CHANGING_TS : tenths_counter      <= tenths_counter      + 1;
-//        CHANGING_H  : hundredths_counter  <= hundredths_counter  + 1;
-//      endcase
-//end
-  
+
 
 endmodule
