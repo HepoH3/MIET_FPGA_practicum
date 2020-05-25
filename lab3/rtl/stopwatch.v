@@ -179,78 +179,24 @@ always @( posedge clk100_i or negedge rstn_i ) begin
     end
 end
 
-reg [6:0] decoder_ten_seconds;
-always @(*) begin
-  case (ten_seconds_counter)
-    4'd0:    decoder_ten_seconds <= 7'b0000001;
-    4'd1:    decoder_ten_seconds <= 7'b1001111;
-    4'd2:    decoder_ten_seconds <= 7'b0010010;
-    4'd3:    decoder_ten_seconds <= 7'b0000110;
-    4'd4:    decoder_ten_seconds <= 7'b1001100;
-    4'd5:    decoder_ten_seconds <= 7'b0100100;
-    4'd6:    decoder_ten_seconds <= 7'b0100001;
-    4'd7:    decoder_ten_seconds <= 7'b0001111;
-    4'd8:    decoder_ten_seconds <= 7'b0000000;
-    4'd9:    decoder_ten_seconds <= 7'b0000100;
-    default: decoder_ten_seconds <= 7'b1111111;
-  endcase;
-end
-assign hex3_o = decoder_ten_seconds;
+dec_hex dec3(
+  .in ( ten_seconds_counter ),
+  .out( hex3_o              )
+);
 
-reg [6:0] decoder_seconds;
-always @(*) begin
-  case (seconds_counter)
-    4'd0:    decoder_seconds <= 7'b0000001;
-    4'd1:    decoder_seconds <= 7'b1001111;
-    4'd2:    decoder_seconds <= 7'b0010010;
-    4'd3:    decoder_seconds <= 7'b0000110;
-    4'd4:    decoder_seconds <= 7'b1001100;
-    4'd5:    decoder_seconds <= 7'b0100100;
-    4'd6:    decoder_seconds <= 7'b0100001;
-    4'd7:    decoder_seconds <= 7'b0001111;
-    4'd8:    decoder_seconds <= 7'b0000000;
-    4'd9:    decoder_seconds <= 7'b0000100;
-    default: decoder_seconds <= 7'b1111111;
-  endcase;
-end
-assign hex2_o = decoder_seconds;
+dec_hex dec2(
+  .in ( seconds_counter     ),
+  .out( hex2_o              )
+);
 
-reg [6:0] decoder_tenth;
-always @(*) begin
-  case (tenths_counter)
-    4'd0:    decoder_tenth <= 7'b0000001;
-    4'd1:    decoder_tenth <= 7'b1001111;
-    4'd2:    decoder_tenth <= 7'b0010010;
-    4'd3:    decoder_tenth <= 7'b0000110;
-    4'd4:    decoder_tenth <= 7'b1001100;
-    4'd5:    decoder_tenth <= 7'b0100100;
-    4'd6:    decoder_tenth <= 7'b0100001;
-    4'd7:    decoder_tenth <= 7'b0001111;
-    4'd8:    decoder_tenth <= 7'b0000000;
-    4'd9:    decoder_tenth <= 7'b0000100;
-    default: decoder_tenth <= 7'b1111111;
-  endcase;
-end
-assign hex1_o = decoder_tenth;
+dec_hex dec1(
+  .in ( tenths_counter     ),
+  .out( hex1_o             )
+);
 
-reg [6:0] decoder_hundredth;
-always @(*) begin
-  case (hundredths_counter)
-    4'd0:    decoder_hundredth <= 7'b0000001;
-    4'd1:    decoder_hundredth <= 7'b1001111;
-    4'd2:    decoder_hundredth <= 7'b0010010;
-    4'd3:    decoder_hundredth <= 7'b0000110;
-    4'd4:    decoder_hundredth <= 7'b1001100;
-    4'd5:    decoder_hundredth <= 7'b0100100;
-    4'd6:    decoder_hundredth <= 7'b0100001;
-    4'd7:    decoder_hundredth <= 7'b0001111;
-    4'd8:    decoder_hundredth <= 7'b0000000;
-    4'd9:    decoder_hundredth <= 7'b0000100;
-    default: decoder_hundredth <= 7'b1111111;
-  endcase;
-end
-assign hex0_o = decoder_hundredth;
+dec_hex dec0(
+  .in ( hundredths_counter ),
+  .out( hex0_o             )
+);
 
-
-    
 endmodule
