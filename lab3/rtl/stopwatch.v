@@ -16,8 +16,8 @@ localparam STATE_1       = 3'd1;
 localparam STATE_2       = 3'd2;
 localparam STATE_3       = 3'd3;
 localparam STATE_4       = 3'd4;
-localparam PULSE_MAX = 18'd259999;
-localparam COUNTER_MAX = 4'd9;
+localparam PULSE_MAX     = 18'd259999;
+localparam COUNTER_MAX   = 4'd9;
 reg [1:0] btn_set_syncroniser;
 reg [1:0] btn_change_syncroniser;
 reg [1:0] btn_start_stop_sync;
@@ -59,8 +59,8 @@ always @( posedge clk100_i or negedge rstn_i ) begin
       if ( hundredth_of_second_passed ) pulse_counter <= 0;
       else pulse_counter <= pulse_counter + 1;
 end
-reg [3:0] hundredths_counter = 4'd0;
-wire      tenth_of_second_passed = ((hundredths_counter == COUNTER_MAX) & hundredth_of_second_passed);
+reg [3:0] hundredths_counter     = 4'd0;
+wire      tenth_of_second_passed = ( ( hundredths_counter == COUNTER_MAX ) & hundredth_of_second_passed );
 always @( posedge clk100_i or negedge rstn_i ) begin
   if ( !rstn_i ) hundredths_counter <= 0;
   else if ( hundredth_of_second_passed )
@@ -68,7 +68,7 @@ always @( posedge clk100_i or negedge rstn_i ) begin
        else hundredths_counter <= hundredths_counter + 1;
 end
 reg [3:0] tenths_counter = 4'd0;
-wire      second_passed = ((tenths_counter == COUNTER_MAX) & tenth_of_second_passed);
+wire      second_passed  = ( ( tenths_counter == COUNTER_MAX ) & tenth_of_second_passed );
 
 always @( posedge clk100_i or negedge rstn_i ) begin
   if ( !rstn_i ) tenths_counter <= 0;
@@ -78,7 +78,7 @@ always @( posedge clk100_i or negedge rstn_i ) begin
 end
 
 reg  [3:0] seconds_counter    = 4'd0;
-wire       ten_seconds_passed = (( seconds_counter == COUNTER_MAX ) & second_passed );
+wire       ten_seconds_passed = ( ( seconds_counter == COUNTER_MAX ) & second_passed );
 always @( posedge clk100_i or negedge rstn_i ) begin
   if ( !rstn_i ) seconds_counter <= 0;
   else if ( second_passed )
@@ -100,76 +100,76 @@ always @(*)
                          next_state = STATE_1;
                        end
                        else begin
-                           next_state = STATE_DEFAULT;
+                         next_state = STATE_DEFAULT;
                        end
 
        STATE_1 :       if ( btn_set_was_pressed ) begin
                          next_state = STATE_2;
                        end
                        else 
-                           if ( btn_change_was_pressed ) begin
-                             if ( hundredths_counter == COUNTER_MAX ) begin
-                               hundredths_counter = 0;
-                             end
-                             else begin
-                              hundredths_counter = hundredths_counter + 1;
-                              next_state         = STATE_1;
-                             end
+                         if ( btn_change_was_pressed ) begin
+                           if ( hundredths_counter == COUNTER_MAX ) begin
+                             hundredths_counter = 0;
                            end
-                       else begin
-                             next_state = STATE_1;
-                       end
+                           else begin
+                            hundredths_counter  = hundredths_counter + 1;
+                            next_state          = STATE_1;
+                           end
+                         end
+                         else begin
+                           next_state = STATE_1;
+                         end
 
        STATE_2 :       if ( btn_set_was_pressed ) begin
                          next_state = STATE_3;
                        end
                        else 
-                           if ( btn_change_was_pressed ) begin
-                             if ( tenths_counter == COUNTER_MAX ) begin
-                               tenths_counter = 0;
-                             end
-                             else begin
-                              tenths_counter = tenths_counter + 1;
-                              next_state     = STATE_2;
-                             end
+                         if ( btn_change_was_pressed ) begin
+                           if ( tenths_counter == COUNTER_MAX ) begin
+                             tenths_counter = 0;
                            end
-                       else begin
-                             next_state = STATE_2;
-                       end
+                           else begin
+                            tenths_counter = tenths_counter + 1;
+                            next_state     = STATE_2;
+                           end
+                         end
+                         else begin
+                           next_state = STATE_2;
+                         end
 
        STATE_3 :       if ( btn_set_was_pressed ) begin
                          next_state = STATE_4;
                        end
                        else 
-                           if ( btn_change_was_pressed ) begin
-                             if ( seconds_counter == COUNTER_MAX ) begin
-                               seconds_counter      = 0;
-                             end
-                             else begin
-                              seconds_counter       = seconds_counter + 1;
-                              next_state            = STATE_3;
-                             end
+                         if ( btn_change_was_pressed ) begin
+                           if ( seconds_counter == COUNTER_MAX ) begin
+                             seconds_counter      = 0;
                            end
-                       else begin
-                             next_state  = STATE_3;
-                       end
+                           else begin
+                             seconds_counter      = seconds_counter + 1;
+                             next_state           = STATE_3;
+                           end
+                         end
+                         else begin
+                           next_state  = STATE_3;
+                         end
 
        STATE_4 :       if ( btn_set_was_pressed ) begin
                          next_state = STATE_DEFAULT;
                        end
                        else 
-                           if ( btn_change_was_pressed ) begin
-                             if ( ten_seconds_counter == COUNTER_MAX ) begin
-                               ten_seconds_counter  = 0;
-                             end
-                             else begin
-                              ten_seconds_counter   = seconds_counter + 1;
-                              ten_seconds_counter   = STATE_4;
-                             end
+                         if ( btn_change_was_pressed ) begin
+                           if ( ten_seconds_counter == COUNTER_MAX ) begin
+                             ten_seconds_counter  = 0;
                            end
-                       else begin
-                             next_state  = STATE_4;
-                       end 
+                           else begin
+                             ten_seconds_counter = seconds_counter + 1;
+                             ten_seconds_counter = STATE_4;
+                           end
+                         end
+                         else begin
+                           next_state = STATE_4;
+                         end 
 
        default : next_state = STATE_DEFAULT;
      endcase
@@ -181,8 +181,8 @@ always @( posedge clk100_i or negedge rstn_i )
      state <= STATE_DEFAULT;
    else
      state <= next_state;
-  end
- reg [6:0] decoder_ten_seconds;
+end
+reg [6:0] decoder_ten_seconds;
 always @( * ) begin
   case ( ten_seconds_counter )      
     4'd0    : decoder_ten_seconds = 7'b100_0000;
