@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="test_clk_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="test_clk_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="2450001fs"></ZoomEndTime>
+      <Cursor1Time time="405000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="175"></NameColumnWidth>
+      <ValueColumnWidth column_width="126"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="15" />
+   <wvobject fp_name="/test_clk_tb/clk_50m" type="logic">
+      <obj_property name="ElementShortName">clk_50m</obj_property>
+      <obj_property name="ObjectShortName">clk_50m</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_clk_tb/sw" type="array">
+      <obj_property name="ElementShortName">sw[10:0]</obj_property>
+      <obj_property name="ObjectShortName">sw[10:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_clk_tb/btn" type="array">
+      <obj_property name="ElementShortName">btn[4:0]</obj_property>
+      <obj_property name="ObjectShortName">btn[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_clk_tb/led" type="array">
+      <obj_property name="ElementShortName">led[9:0]</obj_property>
+      <obj_property name="ObjectShortName">led[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_clk_tb/hex0" type="array">
+      <obj_property name="ElementShortName">hex0[6:0]</obj_property>
+      <obj_property name="ObjectShortName">hex0[6:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_clk_tb/hex1" type="array">
+      <obj_property name="ElementShortName">hex1[6:0]</obj_property>
+      <obj_property name="ObjectShortName">hex1[6:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_clk_tb/hex_on" type="array">
+      <obj_property name="ElementShortName">hex_on[7:0]</obj_property>
+      <obj_property name="ObjectShortName">hex_on[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="group13" type="group">
+      <obj_property name="label">register</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u2/d_i" type="array">
+         <obj_property name="ElementShortName">d_i[9:0]</obj_property>
+         <obj_property name="ObjectShortName">d_i[9:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u2/rst_i" type="logic">
+         <obj_property name="ElementShortName">rst_i</obj_property>
+         <obj_property name="ObjectShortName">rst_i</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u2/en_i" type="logic">
+         <obj_property name="ElementShortName">en_i</obj_property>
+         <obj_property name="ObjectShortName">en_i</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u2/register_o" type="array">
+         <obj_property name="ElementShortName">register_o[9:0]</obj_property>
+         <obj_property name="ObjectShortName">register_o[9:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group18" type="group">
+      <obj_property name="label">counter 1</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u3/en_i" type="logic">
+         <obj_property name="ElementShortName">en_i</obj_property>
+         <obj_property name="ObjectShortName">en_i</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u3/rst_i" type="logic">
+         <obj_property name="ElementShortName">rst_i</obj_property>
+         <obj_property name="ObjectShortName">rst_i</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group52" type="group">
+      <obj_property name="label">counter 2</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u4/en_i" type="logic">
+         <obj_property name="ElementShortName">en_i</obj_property>
+         <obj_property name="ObjectShortName">en_i</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u4/rst_i" type="logic">
+         <obj_property name="ElementShortName">rst_i</obj_property>
+         <obj_property name="ObjectShortName">rst_i</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group59" type="group">
+      <obj_property name="label">hub</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/counter_1_o" type="array">
+         <obj_property name="ElementShortName">counter_1_o[7:0]</obj_property>
+         <obj_property name="ObjectShortName">counter_1_o[7:0]</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/counter_2_o" type="array">
+         <obj_property name="ElementShortName">counter_2_o[7:0]</obj_property>
+         <obj_property name="ObjectShortName">counter_2_o[7:0]</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/synced_event" type="logic">
+         <obj_property name="ElementShortName">synced_event</obj_property>
+         <obj_property name="ObjectShortName">synced_event</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/btn_push" type="array">
+         <obj_property name="ElementShortName">btn_push[4:0]</obj_property>
+         <obj_property name="ObjectShortName">btn_push[4:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/counter_sw_reg" type="array">
+         <obj_property name="ElementShortName">counter_sw_reg[1:0]</obj_property>
+         <obj_property name="ObjectShortName">counter_sw_reg[1:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/counter_sw" type="array">
+         <obj_property name="ElementShortName">counter_sw[1:0]</obj_property>
+         <obj_property name="ObjectShortName">counter_sw[1:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group26" type="group">
+      <obj_property name="label">switch event</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u5/btn_sync_i" type="logic">
+         <obj_property name="ElementShortName">btn_sync_i</obj_property>
+         <obj_property name="ObjectShortName">btn_sync_i</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u5/rst_i" type="logic">
+         <obj_property name="ElementShortName">rst_i</obj_property>
+         <obj_property name="ObjectShortName">rst_i</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u5/synced_event_o" type="logic">
+         <obj_property name="ElementShortName">synced_event_o</obj_property>
+         <obj_property name="ObjectShortName">synced_event_o</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u5/sw_event" type="logic">
+         <obj_property name="ElementShortName">sw_event</obj_property>
+         <obj_property name="ObjectShortName">sw_event</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u5/event_sync_reg" type="array">
+         <obj_property name="ElementShortName">event_sync_reg[1:0]</obj_property>
+         <obj_property name="ObjectShortName">event_sync_reg[1:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u5/sync_block" type="logic">
+         <obj_property name="ElementShortName">sync_block</obj_property>
+         <obj_property name="ObjectShortName">sync_block</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u5/EV_CONST" type="array">
+         <obj_property name="ElementShortName">EV_CONST[3:0]</obj_property>
+         <obj_property name="ObjectShortName">EV_CONST[3:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group56" type="group">
+      <obj_property name="label">keys_debouncer</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u1/deb_on_i" type="logic">
+         <obj_property name="ElementShortName">deb_on_i</obj_property>
+         <obj_property name="ObjectShortName">deb_on_i</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u1/btn_o" type="array">
+         <obj_property name="ElementShortName">btn_o[3:0]</obj_property>
+         <obj_property name="ObjectShortName">btn_o[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u1/btn_rst_o" type="logic">
+         <obj_property name="ElementShortName">btn_rst_o</obj_property>
+         <obj_property name="ObjectShortName">btn_rst_o</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u1/btn_clk" type="array">
+         <obj_property name="ElementShortName">btn_clk[3:0]</obj_property>
+         <obj_property name="ObjectShortName">btn_clk[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u1/btn_deb" type="array">
+         <obj_property name="ElementShortName">btn_deb[3:0]</obj_property>
+         <obj_property name="ObjectShortName">btn_deb[3:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group73" type="group">
+      <obj_property name="label">debouncer</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u1/u5/rst_i" type="logic">
+         <obj_property name="ElementShortName">rst_i</obj_property>
+         <obj_property name="ObjectShortName">rst_i</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u1/u5/btn_i" type="logic">
+         <obj_property name="ElementShortName">btn_i</obj_property>
+         <obj_property name="ObjectShortName">btn_i</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u1/u5/btn_o" type="logic">
+         <obj_property name="ElementShortName">btn_o</obj_property>
+         <obj_property name="ObjectShortName">btn_o</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u1/u5/state_o" type="logic">
+         <obj_property name="ElementShortName">state_o</obj_property>
+         <obj_property name="ObjectShortName">state_o</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u1/u5/sync" type="array">
+         <obj_property name="ElementShortName">sync[1:0]</obj_property>
+         <obj_property name="ObjectShortName">sync[1:0]</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u1/u5/counter" type="array">
+         <obj_property name="ElementShortName">counter[1:0]</obj_property>
+         <obj_property name="ObjectShortName">counter[1:0]</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u1/u5/idle" type="logic">
+         <obj_property name="ElementShortName">idle</obj_property>
+         <obj_property name="ObjectShortName">idle</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u1/u5/max" type="logic">
+         <obj_property name="ElementShortName">max</obj_property>
+         <obj_property name="ObjectShortName">max</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group63" type="group">
+      <obj_property name="label">sync</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u1/u1/btn_i" type="logic">
+         <obj_property name="ElementShortName">btn_i</obj_property>
+         <obj_property name="ObjectShortName">btn_i</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u1/u1/rst_i" type="logic">
+         <obj_property name="ElementShortName">rst_i</obj_property>
+         <obj_property name="ObjectShortName">rst_i</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u1/u1/btn_clk_o" type="logic">
+         <obj_property name="ElementShortName">btn_clk_o</obj_property>
+         <obj_property name="ObjectShortName">btn_clk_o</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u1/u1/sync" type="logic">
+         <obj_property name="ElementShortName">sync</obj_property>
+         <obj_property name="ObjectShortName">sync</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_clk_tb/DUT/u1/u1/u1/sync_block" type="logic">
+         <obj_property name="ElementShortName">sync_block</obj_property>
+         <obj_property name="ObjectShortName">sync_block</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>
