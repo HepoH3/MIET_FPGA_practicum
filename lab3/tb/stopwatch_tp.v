@@ -45,8 +45,10 @@ initial begin
   rstn_i = 0;
   #100;
   rstn_i = 1;
-  #1000;
+  #100;
   start_stop_i = 0;
+  
+  
   #100;
   set_i = 0;
   #100;
@@ -129,7 +131,6 @@ initial begin
   start_stop_i = 0;
   #100;
   start_stop_i = 1;
-  
 
 end
 
