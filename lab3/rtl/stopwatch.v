@@ -2,10 +2,7 @@
  
 module stopwatch #(
   parameter PULSE_MAX  = 17'd259999,
-            HUNTHS_MAX = 4'd9,
-            TENTHS_MAX = 4'd9,
-            SEC_MAX    = 4'd9,
-            TENS_MAX   = 4'd9
+            COUNT_MAX = 4'd9
             )
 (
   input        clk100_i,
@@ -20,13 +17,15 @@ module stopwatch #(
   output [6:0] hex3_o
   );
 
-localparam  RUN_STATE  = 1'd1;
-localparam  SET_STATE  = 1'd0;
-reg   state_stopwatch  = RUN_STATE;
+localparam RUN_STATE = 3'd0;
+localparam CHANGE_H  = 3'd1;
+localparam CHANGE_TS = 3'd2;
+localparam CHANGE_S  = 3'd3;
+localparam CHANGE_T  = 3'd4;
 
-// синхронизация обработки
-// нажатия кнопки «СтартСтоп»
 wire start_stop_was_pressed;
+wire set_was_pressed;
+wire change_was_pressed;
  
 keypress start_stop( 
   .clk100_i          ( clk100_i               ),
@@ -35,10 +34,6 @@ keypress start_stop(
   .btn_was_pressed_o ( start_stop_was_pressed )
 );
  
-reg  device_running;
-wire set_was_pressed;
-wire change_was_pressed;
-
 keypress set( 
   .clk100_i          ( clk100_i        ),
   .rstn_i            ( rstn_i          ),
@@ -53,35 +48,36 @@ keypress change(
   .btn_was_pressed_o ( change_was_pressed )
 );
 
-wire [3:0] ten_sec_count;
+reg        device_running;
+wire [2:0] stopwatch_state;
+wire       increment;
+wire       passed_all;
 
-initial_state_stopwatch iss(
-  .clk_i                ( clk100_i                   ),
-  .rstn_i               ( rstn_i                     ),
-  .dev_run_i            ( device_running             ),
-  .set_was_pressed_i    ( set_was_pressed_i          ),
-  .change_was_pressed_i ( change_was_pressed_i       ),
-  .hund                 ( hundredths_counter   [3:0] ),
-  .tenth                ( tenths_counter       [3:0] ),
-  .sec                  ( seconds_counter      [3:0] ),
-  .ten                  ( ten_sec_count        [3:0] ) 
-);  
+finstate_machine StW_state(
+  .clk_i         ( clk100_i           ),
+  .rstn_i        ( rstn_i             ),
+  .dev_run_i     ( device_running     ),
+  .set_i         ( set_was_pressed    ),
+  .change_i      ( change_was_pressed ),
+  .state_value_o ( stopwatch_state    ),
+  .inc_this_o    ( increment          ),
+  .passed_all_o  ( passed_all         )
+);
 
-//выработка признака «device_running »
 
-always @( posedge clk100_i )
-  if( set_was_pressed_i && ~device_running )
-    state_stopwatch <= SET_STATE;
 
-always @( posedge clk100_i or negedge rstn_i ) begin
+always @ ( posedge clk100_i ) begin
   if( !rstn_i )
     device_running <= 0;
-  else if ( start_stop_was_pressed && state_stopwatch == RUN_STATE )
-    device_running <= ~device_running;
+  if ( passed_all )
+    device_running <= 1'b1;
+  else if ( stopwatch_state == RUN_STATE )
+    if ( start_stop_was_pressed )
+      device_running <= ~device_running;
 end
 
- // счётчик импульсов
- // и признак истечения 0,01 сек
+
+
 reg [16:0] pulse_counter = 17'd0;
 wire hundredth_of_second_passed = ( pulse_counter == PULSE_MAX );
 
@@ -95,40 +91,55 @@ always @ ( posedge clk100_i or negedge rstn_i ) begin
       pulse_counter <= pulse_counter + 1;
 end
 
-// основные счётчики
-wire [3:0] hundredths_counter;
-wire tenth_of_second_passed = ( ( hundredths_counter == HUNTHS_MAX ) & hundredth_of_second_passed );
 
-counter hunths(
-  .clk_i           ( clk100_i                         ),
-  .rstn_i          ( rstn_i                           ),
-  .type_of_time1_i ( hundredth_of_second_passed       ),
-  .type_of_time2_i ( tenth_of_second_passed           ),
-  .counter_o       ( hundredths_counter         [3:0] )
-);
 
-wire [3:0] tenths_counter;
-wire second_passed = ( ( tenths_counter == TENTHS_MAX ) & tenth_of_second_passed );
+reg [3:0] hundredths_counter;
+wire tenth_of_second_passed = ( ( hundredths_counter == COUNT_MAX ) & hundredth_of_second_passed );
 
-counter tenths(
-  .clk_i           ( clk100_i                     ),
-  .rstn_i          ( rstn_i                       ),
-  .type_of_time1_i ( tenth_of_second_passed       ),
-  .type_of_time2_i ( second_passed                ),
-  .counter_o       ( tenths_counter         [3:0] )
-);
+always @( posedge clk100_i or negedge rstn_i ) begin
+  if ( !rstn_i )
+    hundredths_counter <= 4'd0;
+  else if ( hundredth_of_second_passed ) begin
+    if ( tenth_of_second_passed )
+      hundredths_counter <= 4'd0;
+    else 
+      hundredths_counter <= hundredths_counter + 1;
+  end
+  else if ( stopwatch_state == CHANGE_H && increment )
+    hundredths_counter <= hundredths_counter + 1;
+end
 
-wire [3:0] seconds_counter;
-wire ten_seconds_passed = ( ( seconds_counter == SEC_MAX ) & second_passed );
+reg [3:0] tenths_counter;
+wire second_passed = ( ( tenths_counter == COUNT_MAX ) & tenth_of_second_passed );
 
-counter seconds(
-  .clk_i           ( clk100_i                 ),
-  .rstn_i          ( rstn_i                   ),
-  .type_of_time1_i ( second_passed            ),
-  .type_of_time2_i ( ten_seconds_passed       ),
-  .counter_o       ( seconds_counter    [3:0] )
-);
+always @( posedge clk100_i or negedge rstn_i ) begin
+  if ( !rstn_i ) 
+    tenths_counter <= 4'd0;
+  else if ( tenth_of_second_passed ) begin
+    if ( second_passed ) 
+      tenths_counter <= 4'd0;
+    else 
+      tenths_counter <= tenths_counter + 1;
+  end
+  else if ( stopwatch_state == CHANGE_TS && increment )
+    tenths_counter <= tenths_counter + 1;
+end
 
+reg [3:0] seconds_counter;
+wire ten_seconds_passed = ( ( seconds_counter == COUNT_MAX ) & second_passed );
+
+always @( posedge clk100_i or negedge rstn_i ) begin
+  if ( !rstn_i )
+    seconds_counter <= 4'd0;
+  else if ( second_passed ) begin
+    if ( ten_seconds_passed ) 
+      seconds_counter <= 4'd0;
+    else 
+      seconds_counter <= seconds_counter + 1;
+  end
+  else if ( stopwatch_state == CHANGE_S && increment )
+    seconds_counter <= seconds_counter + 1;
+end
 
 reg [3:0] ten_seconds_counter;
 assign ten_sec_count = ten_seconds_counter;
@@ -137,49 +148,31 @@ always @( posedge clk100_i or negedge rstn_i ) begin
   if ( !rstn_i ) 
     ten_seconds_counter <= 0;
   else if ( ten_seconds_passed )
-    if ( ten_seconds_counter == TENS_MAX )
+    if ( ten_seconds_counter == COUNT_MAX )
       ten_seconds_counter <= 0;
     else 
       ten_seconds_counter <= ten_seconds_counter + 1;
 end
 
-// дешифраторы для отображения
-// содержимого основных регистров
-// на семисегментных индикаторах
-wire [6:0] decoder_ten_seconds;
 
 decoder d1(
   .in  ( ten_seconds_counter [3:0] ),
-  .out ( decoder_ten_seconds [6:0] )
+  .out ( hex3_o              [6:0] )
 );
-
-assign hex3_o = decoder_ten_seconds;
-
-wire [6:0] decoder_seconds;
 
 decoder d2(
   .in  ( seconds_counter [3:0] ),
-  .out ( decoder_seconds [6:0] )
+  .out ( hex2_o          [6:0] )
 );
-
-assign hex2_o = decoder_seconds;
-
-wire [6:0] decoder_tenths;
 
 decoder d3(
   .in  ( tenths_counter [3:0] ),
-  .out ( decoder_tenths [6:0] )
+  .out ( hex1_o         [6:0] )
 );
-
-assign hex1_o = decoder_tenths;
-
-wire [6:0] decoder_hundredths;
 
 decoder d4(
   .in  ( hundredths_counter [3:0] ),
-  .out ( decoder_hundredths [6:0] )
+  .out ( hex0_o             [6:0] )
 );
-
-assign hex0_o = decoder_hundredths;
 
 endmodule
