@@ -1,0 +1,16 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"../../../../../../Study/ÏËÈÑ/lab-2/rtl/Counter_8.v" \
+"../../../../../../Study/ÏËÈÑ/lab-2/rtl/KEY_Debounce.v" \
+"../../../../../../Study/ÏËÈÑ/lab-2/rtl/KEY_Pressing.v" \
+"../../../../../../Study/ÏËÈÑ/lab-2/rtl/KEY_Switching.v" \
+"../../../../../../Study/ÏËÈÑ/lab-2/rtl/REG_Event.v" \
+"../../../../../../Study/ÏËÈÑ/lab-2/rtl/Register_10.v" \
+"../../../../../../Study/ÏËÈÑ/lab-2/rtl/mainframe.v" \
+"../../../../../../Study/ÏËÈÑ/lab-2/tb/test_clk_tb.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort
