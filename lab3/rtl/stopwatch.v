@@ -27,14 +27,14 @@ reg        device_running;
 
 always @( posedge clk100_i or negedge rstn_i ) begin
   if( !rstn_i )
-    device_running = 1'b0;
+    device_running <= 1'b0;
   else
     begin
     if( start_stop_pressed & device_running )
-      device_running = 1'b0;
+      device_running <= 1'b0;
     else
       if( start_stop_pressed & !device_running & cnt == 0 )
-        device_running = 1'b1;
+        device_running <= 1'b1;
     end
 end
 
