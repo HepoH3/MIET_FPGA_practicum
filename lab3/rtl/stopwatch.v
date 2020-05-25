@@ -19,23 +19,14 @@ localparam TEN_SECONDS_LIMIT = 4'd9;
 
 // start-stop processing
 
-reg [2:0] button_synchroniser;
 wire      button_was_pressed;
+button_sync start_stop_sync (
+    .clk100_i             ( clk100_i           ),
+    .rstn_i               ( rstn_i             ),
+    .button_i             ( start_stop_i       ),
+    .button_was_pressed_o ( button_was_pressed )
+);
 
-always @( posedge clk100_i or negedge rstn_i )
-  begin
-    if ( ~rstn_i )
-      button_synchroniser <= 3'd0;
-    else
-      begin
-        button_synchroniser[0] <= ~start_stop_i;
-        button_synchroniser[1] <= button_synchroniser[0];
-        button_synchroniser[2] <= button_synchroniser[1];
-      end
-  end
-
-assign button_was_pressed = ( ~button_synchroniser[2] ) &
-                               button_synchroniser[1];
 
 // device_running 
 
@@ -73,7 +64,7 @@ reg [3:0] hundredth_counter = 4'd0;
 wire      tenth_of_second_passed = 
   ( ( hundredth_counter == HUNDREDTH_LIMIT ) &
       hundredth_of_second_passed );
-      
+
 always @( posedge clk100_i or negedge rstn_i )
   begin
     if ( ~rstn_i )
@@ -165,41 +156,21 @@ hex_decoder dec3 (
        
  // state machine buttons processing
  
-reg [2:0] set_synchroniser;
 wire      set_was_pressed;
-
-always @( posedge clk100_i or negedge rstn_i )
-  begin
-    if ( ~rstn_i )
-      set_synchroniser <= 3'd0;
-    else
-      begin
-        set_synchroniser[0] <= ~set_i;
-        set_synchroniser[1] <= set_synchroniser[0];
-        set_synchroniser[2] <= set_synchroniser[1];
-      end
-  end
-
-assign set_was_pressed = ( ~set_synchroniser[2] ) &
-                               set_synchroniser[1];
+button_sync set_sync (
+    .clk100_i             ( clk100_i        ),
+    .rstn_i               ( rstn_i          ),
+    .button_i             ( set_i           ),
+    .button_was_pressed_o ( set_was_pressed )
+);
  
-reg [2:0] change_synchroniser;
 wire      change_was_pressed;
-
-always @( posedge clk100_i or negedge rstn_i )
-  begin
-    if ( ~rstn_i )
-      change_synchroniser <= 3'd0;
-    else
-      begin
-        change_synchroniser[0] <= ~change_i;
-        change_synchroniser[1] <= change_synchroniser[0];
-        change_synchroniser[2] <= change_synchroniser[1];
-      end
-  end
-
-assign change_was_pressed = ( ~change_synchroniser[2] ) &
-                               change_synchroniser[1];
+button_sync change_sync (
+    .clk100_i             ( clk100_i           ),
+    .rstn_i               ( rstn_i             ),
+    .button_i             ( change_i           ),
+    .button_was_pressed_o ( change_was_pressed )
+);
  
  // state machine
  
