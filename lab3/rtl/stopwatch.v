@@ -98,7 +98,7 @@ always @( posedge clk100_i or negedge rstn_i )
       end;
   end;
   
-
+//digits desc
 reg [3:0] hundredth_counter = 4'd0;
 wire      tenth_of_second_passed = 
   ( ( hundredth_counter == HUNDREDTH_LIMIT ) &
@@ -181,61 +181,53 @@ always @( posedge clk100_i or negedge rstn_i )
  localparam STATE_D_3     = 3'd3;
  localparam STATE_D_4     = 3'd4;
  
- always @(*) 
+ always @( * ) 
    begin
      case ( state_adjust )
-       STATE_DEFAULT : if ( (!device_running) & ( set_was_pressed ) ) 
-                         next_state_adjust = STATE_D_1;
-                      else next_state_adjust = STATE_DEFAULT;
+       STATE_DEFAULT : if ( ( ~device_running ) & ( set_was_pressed ) )  next_state_adjust = STATE_D_1;
+                       else                                              next_state_adjust = STATE_DEFAULT;
                       
        STATE_D_1 : if ( set_was_pressed ) next_state_adjust = STATE_D_2;
                    else if ( change_was_pressed ) 
                      begin
-                       if ( hundredth_counter == HUNDREDTH_LIMIT )
-                         hundredth_counter = 4'd0;
-                       else
-                         hundredth_counter = hundredth_counter + 1;
-                       next_state_adjust = STATE_D_1;
+                       if ( hundredth_counter == HUNDREDTH_LIMIT )    hundredth_counter = 4'd0;
+                       else                                           hundredth_counter = hundredth_counter + 1;
+                        next_state_adjust = STATE_D_1;
                      end
                    else next_state_adjust = STATE_D_1;
                      
        STATE_D_2 : if ( set_was_pressed ) next_state_adjust = STATE_D_3;
                    else if ( change_was_pressed ) 
                      begin
-                       if ( tenth_counter == TENTH_LIMIT )
-                         tenth_counter = 4'd0;
-                       else
-                         tenth_counter = tenth_counter + 1;
-                       next_state_adjust = STATE_D_2;
+                       if ( tenth_counter == TENTH_LIMIT )            tenth_counter = 4'd0;
+                       else                                           tenth_counter = tenth_counter + 1;
+                        next_state_adjust = STATE_D_2;
                      end
                    else next_state_adjust = STATE_D_2;
                    
        STATE_D_3 : if ( set_was_pressed ) next_state_adjust = STATE_D_4;
                    else if ( change_was_pressed ) 
                      begin
-                       if ( second_counter == SECONDS_LIMIT )
-                         second_counter = 4'd0;
-                       else
-                         second_counter = second_counter + 1;
-                       next_state_adjust = STATE_D_3;
+                       if ( second_counter == SECONDS_LIMIT )         second_counter = 4'd0;
+                       else                                           second_counter = second_counter + 1;
+                        next_state_adjust = STATE_D_3;
                      end
                    else next_state_adjust = STATE_D_3;
                    
        STATE_D_4 : if ( set_was_pressed ) next_state_adjust = STATE_DEFAULT;
                    else if ( change_was_pressed ) 
                      begin
-                       if ( tenth_second_counter == HUNDREDTH_LIMIT )
-                         tenth_second_counter = 4'd0;
-                       else
-                         tenth_second_counter = tenth_second_counter + 1;
-                       next_state_adjust = STATE_D_4;
+                       if ( tenth_second_counter == HUNDREDTH_LIMIT ) tenth_second_counter = 4'd0;
+                       else                                           tenth_second_counter = tenth_second_counter + 1;
+                        next_state_adjust = STATE_D_4;
                      end
                    else next_state_adjust = STATE_D_4;
                    
-       default   : next_state_adjust = STATE_DEFAULT;
+       default   :      next_state_adjust = STATE_DEFAULT;
      endcase
    end
  
+ //state adjust logic desc
  always @( posedge clk100_i or negedge rstn_i )
    begin
      if ( !rstn_i )
