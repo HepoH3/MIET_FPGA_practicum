@@ -10,15 +10,20 @@ module stopwatch(
   output [6:0] hex3_o
 );
 
-wire start_stop_pressed;
-wire change_pressed;
-wire set_pressed;
-wire device_stopped;
+localparam IDLE        = 3'd0;
+localparam CHANGING_H  = 3'd1;
+localparam CHANGING_TS = 3'd2;
+localparam CHANGING_S  = 3'd3;
+localparam CHANGING_T  = 3'd4;
 
-reg       device_running;
-reg [3:0] state;
+wire       start_stop_pressed;
+wire       change_pressed;
+wire       set_pressed;
+wire [2:0] fsm_state;
+wire       increment;
+wire [3:0] cnt;
 
-assign device_stopped = ( device_running ) ? 1'b0 : 1'b1;
+reg        device_running;
 
 always @( posedge clk100_i or negedge rstn_i ) begin
   if( !rstn_i )
@@ -28,23 +33,23 @@ always @( posedge clk100_i or negedge rstn_i ) begin
     if( start_stop_pressed & device_running )
       device_running = 1'b0;
     else
-      if( start_stop_pressed & device_stopped & state == 0)
+      if( start_stop_pressed & !device_running & cnt == 0 )
         device_running = 1'b1;
     end
 end
 
-reg  [16:0] pulse_counter;
+reg  [18:0] pulse_counter;
 wire        hundredth_of_second_passed;
 
-assign hundredth_of_second_passed = ( pulse_counter == 17'd259999 );
+assign hundredth_of_second_passed = ( pulse_counter == 19'd49999 );
 
 always @( posedge clk100_i or negedge rstn_i ) begin
   if( !rstn_i )
-    pulse_counter <= 17'd0;
+    pulse_counter <= 19'd0;
   else
     if( device_running | hundredth_of_second_passed )
       if( hundredth_of_second_passed )
-        pulse_counter <= 17'd0;
+        pulse_counter <= 19'd0;
       else
         pulse_counter <= pulse_counter + 1;
 end
@@ -58,23 +63,21 @@ always @( posedge clk100_i or negedge rstn_i ) begin
   if( !rstn_i )
     hundredths_counter <= 4'd0;
   else
-    if( !set_pressed & change_pressed & device_stopped ) begin
-      if( state == 1 & ( hundredths_counter < 4'd9 ) )
+    if( hundredth_of_second_passed )
+      if( tens_of_second_passed )
+        hundredths_counter <= 4'd0;
+      else
         hundredths_counter <= hundredths_counter + 1;
-      else
-        if( state == 1 )
-          hundredths_counter <= 0;
-    end
-      else
-        if( hundredth_of_second_passed )
-          if( tens_of_second_passed )
-            hundredths_counter <= 4'd0;
-          else
-            hundredths_counter <= hundredths_counter + 1;
+    else
+      if( fsm_state == CHANGING_H & increment )
+        if( hundredths_counter == 4'd9 )
+          hundredths_counter <= 4'd0;
+        else
+          hundredths_counter <= hundredths_counter + 1;
 end
 
-reg  [3:0] tenths_counter;
-wire       second_passed;
+reg [3:0] tenths_counter;
+wire      second_passed;
 
 assign second_passed = ( ( tenths_counter == 4'd9 ) & tens_of_second_passed );
 
@@ -82,19 +85,17 @@ always @( posedge clk100_i or negedge rstn_i ) begin
   if( !rstn_i )
     tenths_counter <= 4'd0;
   else
-    if( !set_pressed & change_pressed & device_stopped ) begin
-      if( state == 2 & tenths_counter < 4'd9 )
+    if( tens_of_second_passed )
+      if( second_passed )
+        tenths_counter <= 4'd0;
+      else
         tenths_counter <= tenths_counter + 1;
-      else
-        if( state == 2 )
-          tenths_counter <= 0;
-    end
-      else
-        if( tens_of_second_passed )
-          if( second_passed )
-            tenths_counter <= 4'd0;
-          else
-            tenths_counter <= tenths_counter + 1;
+    else
+      if( fsm_state == CHANGING_TS & increment )
+        if( tenths_counter == 4'd9 )
+          tenths_counter <= 4'd0;
+        else
+          tenths_counter <= tenths_counter + 1;
 end
 
 reg  [3:0] seconds_counter;
@@ -106,19 +107,17 @@ always @( posedge clk100_i or negedge rstn_i ) begin
   if( !rstn_i )
     seconds_counter <= 4'd0;
   else
-    if( !set_pressed & change_pressed & device_stopped ) begin
-      if( state == 3 & seconds_counter < 4'd9 )
+    if( second_passed )
+      if( ten_seconds_passed )
+        seconds_counter <= 4'd0;
+      else
         seconds_counter <= seconds_counter + 1;
-      else
-        if( state == 3 )
-          seconds_counter <= 0;
-    end
-      else
-        if( second_passed )
-          if( ten_seconds_passed )
-            seconds_counter <= 4'd0;
-          else
-            seconds_counter <= seconds_counter + 1;
+    else
+      if( fsm_state == CHANGING_S & increment )
+        if( seconds_counter == 4'd9 )
+          seconds_counter <= 4'd0;
+        else
+          seconds_counter <= seconds_counter + 1;
 end
 
 reg [3:0] ten_seconds_counter;
@@ -127,33 +126,17 @@ always @( posedge clk100_i or negedge rstn_i ) begin
   if( !rstn_i )
     ten_seconds_counter <= 4'd0;
   else
-    if( !set_pressed & change_pressed & device_stopped ) begin
-      if( state == 4 & ten_seconds_counter < 4'd9 )
+    if( ten_seconds_passed )
+      if( ten_seconds_counter == 4'd9 )
+        ten_seconds_counter <= 4'd0;
+      else
         ten_seconds_counter <= ten_seconds_counter + 1;
-      else
-        if( state == 4 )
-          ten_seconds_counter <= 0;
-    end
-      else
-        if( ten_seconds_passed )
-          if( ten_seconds_counter == 4'd9 )
-            ten_seconds_counter <= 4'd0;
-          else
-            ten_seconds_counter <= ten_seconds_counter + 1;
-end
-
-always @( posedge clk100_i or negedge rstn_i ) begin
-  if( !rstn_i ) begin
-    state <= 4'd0;
-  end
-  else
-    if( device_stopped ) begin
-      if( !start_stop_pressed & set_pressed & state < 4 )
-        state <= state + 1;
-      else
-        if( set_pressed & state == 4 )
-          state <= 4'd0;
-    end
+    else
+      if( fsm_state == CHANGING_T & increment )
+        if( ten_seconds_counter == 4'd9 )
+          ten_seconds_counter <= 4'd0;
+        else
+          ten_seconds_counter <= ten_seconds_counter + 1;
 end
 
 dec_hex ten_sec(
@@ -195,6 +178,18 @@ debounce change(
   .btn_o   ( change_pressed ),
   .rst_i   ( rstn_i         ),
   .clk_i   ( clk100_i       )
+);
+
+finstate automate(
+  .clk_i        ( clk100_i           ),
+  .rstn_i       ( rstn_i             ),
+  .dev_run_i    ( device_running     ),
+  .set_i        ( set_pressed        ),
+  .start_i      ( start_stop_pressed ),
+  .change_i     ( change_pressed     ),
+  .state_value_o( fsm_state          ),
+  .inc_this_o   ( increment          ),
+  .cnt          ( cnt                )
 );
 
 endmodule
