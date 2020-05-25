@@ -18,20 +18,15 @@ localparam TENTH_MAX       = 4'd9;
 localparam SECONDS_MAX     = 4'd9;
 localparam TEN_SECONDS_MAX = 4'd9;
     
-reg  [2:0] button_syncroniser;
-wire       button_was_pressed;
+wire  button_was_pressed;
 // синхронизация обработки нажатия кнопки СтартСтоп
-always @( posedge clk100_i or negedge rstn_i ) 
-  begin
-    if ( !rstn_i )
-      button_syncroniser    <= 3'b0;
-    else
-      button_syncroniser[0] <= !start_stop_i;
-      button_syncroniser[1] <= button_syncroniser[0];
-      button_syncroniser[2] <= button_syncroniser[1];
-  end
+button_sync btn_str_stp(
+  .btn_i     ( !start_stop_i      ),
+  .btn_o     ( button_was_pressed ),
+  .rstn_i    ( rstn_i             ),
+  .clk100_i  ( clk100_i           )
+);
 
-assign button_was_pressed = !button_syncroniser[2] & button_syncroniser[1];
 //Выработка признака device_running
 reg  device_running;
 
@@ -133,35 +128,25 @@ hex hex0 (
   .out ( hex0_o              )
   );
 // синхронизация обработки нажатия кнопки Set
-reg  [2:0] set_synchroniser;
-wire       set_was_pressed;
 
-always@  ( posedge clk100_i or negedge rstn_i ) 
-  begin
-    if ( !rstn_i )
-      set_synchroniser    <= 3'b0;
-    else
-      set_synchroniser[0] <= !set_i;
-      set_synchroniser[1] <= set_synchroniser[0];
-      set_synchroniser[2] <= set_synchroniser[1];
-  end
+wire  set_was_pressed;
 
-assign set_was_pressed = !set_synchroniser[2] & set_synchroniser[1];
+button_sync btn_set(
+  .btn_i      ( !set_i          ),
+  .btn_o      ( set_was_pressed ),
+  .rstn_i     ( rstn_i          ),
+  .clk100_i   ( clk100_i        )
+);
 // синхронизация обработки нажатия кнопки Change
-reg  [2:0] change_synchroniser;
-wire       change_was_pressed;
 
-always@  ( posedge clk100_i or negedge rstn_i ) 
-  begin
-    if ( !rstn_i )
-      change_synchroniser    <= 3'b0;
-    else
-      change_synchroniser[0] <= !change_i;
-      change_synchroniser[1] <= change_synchroniser[0];
-      change_synchroniser[2] <= change_synchroniser[1];
-  end
-  
-assign change_was_pressed = !change_synchroniser[2] & change_synchroniser[1];  
+wire  change_was_pressed;
+
+button_sync btn_change(
+  .btn_i      ( !change_i          ),
+  .btn_o      ( change_was_pressed ),
+  .rstn_i     ( rstn_i             ),
+  .clk100_i   ( clk100_i           )
+);  
 // описание состояний
 reg [2:0] state_regulation;
 reg [2:0] next_state_regulation;

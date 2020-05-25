@@ -76,7 +76,7 @@ initial begin
   #( 13*CLK_SEMIPERIOD );
   set = 1'b1;
 
-  repeat ( 8 ) begin
+  repeat ( 6 ) begin
     #( 12*CLK_SEMIPERIOD );
     change = 1'b0;
     #( 14*CLK_SEMIPERIOD );
@@ -88,7 +88,7 @@ initial begin
   #( 15*CLK_SEMIPERIOD );
   set = 1'b1;
 
-  repeat ( 4 ) begin
+  repeat ( 7 ) begin
     #( 12*CLK_SEMIPERIOD );
     change = 1'b0;
     #( 13*CLK_SEMIPERIOD );
