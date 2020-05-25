@@ -19,38 +19,37 @@ module stopwatch (
   output [6:0] hex0_o
 );
 
-
   // Based on frequency of 100 MHz
   localparam PULSE_MAX = 999999;
   
   // For decimal notation
   localparam COUNTER_MAX = 9;
   
-  // HEX data
-  wire [6:0] hex3_data;
-  wire [6:0] hex2_data;
-  wire [6:0] hex1_data;
-  wire [6:0] hex0_data;
+  // State machine parameters
+  localparam IDLE           = 0;
+  localparam K0_PR_1        = 1;
+  localparam K0_PR_2        = 2;
+  localparam K0_PR_3        = 3;
+  localparam K0_PR_4        = 4;
+  localparam STOPWATCH_MODE = 5;
   
+  // State machine state
+  reg [2:0] state;
+  reg [2:0] next_state;
   
-  // Part I - synchronization of processing of Start/Stop button
-  reg [2:0] button_synchronizer;
-  wire      button_was_pressed;
-  
-  always @( posedge clk100_i ) begin
-    button_synchronizer[0] <= start_stop_i;
-    button_synchronizer[1] <= button_synchronizer[0];
-    button_synchronizer[2] <= button_synchronizer[1];
+  always @( posedge clk100_i or posedge rstn_i ) begin
+    state <= next_state;
   end
   
-  assign button_was_pressed = ~button_synchronizer[2] & button_synchronizer[1];
+  // Synchronization of processing of buttons
+  wire      start_stop_was_pressed;
+  wire      set_was_pressed;
+  wire      change_was_pressed;
   
+  // Generate sign of "device_running"
+  reg device_running;
   
-  // Part II - generate sign of "device_running"
-  reg device_running = 1;
-  
-  
-  // Part III - impulse counter and 0,01 second sign
+  // Impulse counter and 0,01 second sign
   reg [19:0] pulse_counter;
   wire       hundredth_of_second_passed;
   
@@ -64,7 +63,7 @@ module stopwatch (
   end
   
   
-  // Part IV - main counters
+  // Main counters
   
   // Event flags
   wire      ten_seconds_passed;
@@ -118,36 +117,138 @@ module stopwatch (
   end
   
   
-  // Part V - decoders for display main registers data on seven-self displays
+  // State machine
+  always @( posedge clk100_i or posedge rstn_i )
+  begin
+    if ( rstn_i == 0 )
+      device_running <= 0;
+    else if ( start_stop_was_pressed & ( ( state == IDLE ) | (state == STOPWATCH_MODE ) ) ) begin
+      device_running <= ~device_running;
+    end
+  end
+
+  always @( * ) begin
+    case ( state )
+      IDLE:
+        if ( set_was_pressed )
+          next_state <= K0_PR_1;
+        else if ( start_stop_was_pressed )
+          next_state <= STOPWATCH_MODE;
+        else
+          next_state <= IDLE;
+    
+      K0_PR_1:
+        if ( set_was_pressed )
+          next_state <= K0_PR_2;
+        else if ( change_was_pressed ) begin
+          if ( hundredths_counter != COUNTER_MAX )
+            hundredths_counter <= hundredths_counter + 1;
+          else
+            hundredths_counter <= 0;
+          next_state <= K0_PR_1;
+        end
+        else
+          next_state <= K0_PR_1;
+      
+      K0_PR_2:
+        if ( set_was_pressed )
+          next_state <= K0_PR_3;
+        else if ( change_was_pressed ) begin
+          if ( tenths_counter != COUNTER_MAX )
+            tenths_counter <= tenths_counter + 1;
+          else
+            tenths_counter <= 0;
+          next_state <= K0_PR_2;
+        end
+        else
+          next_state <= K0_PR_2;
+      
+      K0_PR_3:
+        if ( set_was_pressed )
+          next_state <= K0_PR_4;
+        else if ( change_was_pressed ) begin
+          if ( seconds_counter != COUNTER_MAX )
+            seconds_counter <= seconds_counter + 1;
+          else
+            seconds_counter <= 0;
+          next_state <= K0_PR_3;
+        end
+        else
+          next_state <= K0_PR_3;
+      
+      K0_PR_4:
+        if ( set_was_pressed )
+          next_state <= IDLE;
+        else if ( change_was_pressed ) begin
+          if ( ten_seconds_counter != COUNTER_MAX )
+            ten_seconds_counter <= ten_seconds_counter + 1;
+          else
+            ten_seconds_counter <= 0;
+          next_state <= K0_PR_4;
+        end
+        else
+          next_state <= K0_PR_4;
+      
+      STOPWATCH_MODE:
+        if ( start_stop_was_pressed )
+          next_state <= IDLE;
+        else
+          next_state <= STOPWATCH_MODE;
+          
+      default:
+        next_state <= IDLE;
+    endcase
+  end
   
-  // Data output to HEX
-  assign hex3_o = hex3_data;
-  assign hex2_o = hex2_data;
-  assign hex1_o = hex1_data;
-  assign hex0_o = hex0_data;
+  
+  // Include modules
+  
+  // Debouce remover for Start/Stop button
+  debounce_remover debounce_remover2(
+    .clk100_i                ( clk100_i               ),
+    .rstn_i                  ( rstn_i                 ),
+    .button_i                ( ~start_stop_i          ),
+    .button_was_pressed_o    ( start_stop_was_pressed )
+  );
+  
+  // Debouce remover for Set button
+  debounce_remover debounce_remover1(
+    .clk100_i                ( clk100_i               ),
+    .rstn_i                  ( rstn_i                 ),
+    .button_i                ( ~set_i                 ),
+    .button_was_pressed_o    ( set_was_pressed        )
+  );
+  
+  // Debouce remover for Change button
+  debounce_remover debounce_remover0(
+    .clk100_i                ( clk100_i               ),
+    .rstn_i                  ( rstn_i                 ),
+    .button_i                ( ~change_i              ),
+    .button_was_pressed_o    ( change_was_pressed     )
+  );
   
   // Decodes data for output to HEX3 - tens of seconds
   decoder decoder3(
     .data_i                  ( ten_seconds_counter ),
-    .hex_o                   ( hex3_data           )
+    .hex_o                   ( hex3_o              )
   );
   
   // Decodes data for output to HEX2 - seconds
   decoder decoder2(
     .data_i                  ( seconds_counter     ),
-    .hex_o                   ( hex2_data           )
+    .hex_o                   ( hex2_o              )
   );
   
   // Decodes data for output to HEX1 - tenths of second
   decoder decoder1(
     .data_i                  ( tenths_counter      ),
-    .hex_o                   ( hex1_data           )
+    .hex_o                   ( hex1_o              )
   );
   
   // Decodes data for output to HEX0 - hundredths of second
   decoder decoder0(
     .data_i                  ( hundredths_counter  ),
-    .hex_o                   ( hex0_data           )
+    .hex_o                   ( hex0_o              )
   );
   
 endmodule
