@@ -51,10 +51,10 @@ localparam CLK_SEMIPERIOD = (1000/CLK_FREQ_MHZ/2);
   );
 
   initial begin
-    rstn_i       = 1'b1;
+    rstn_i = 1'b1;
     start_stop_i = 1'b1;
-    set_i        = 1'b1;
-    change_i     = 1'b1;
+    set_i = 1'b1;
+    change_i = 1'b1;
     
     #100
     set_i = 1'b0;
@@ -73,6 +73,79 @@ localparam CLK_SEMIPERIOD = (1000/CLK_FREQ_MHZ/2);
     set_i = 1'b1;   
      
     //00.10            
+    
+    
+    #1000           
+    change_i = 1'b0;
+    #100            
+    change_i = 1'b1;
+    
+    #1000           
+    change_i = 1'b0;
+    #100            
+    change_i = 1'b1;
+    
+    #1000           
+    change_i = 1'b0;
+    #100            
+    change_i = 1'b1;
+    
+    #1000           
+    change_i = 1'b0;
+    #100            
+    change_i = 1'b1;
+    
+    #1000           
+    change_i = 1'b0;
+    #100            
+    change_i = 1'b1;
+    
+    
+    #1000           
+    change_i = 1'b0;
+    #100            
+    change_i = 1'b1;
+    
+    #1000           
+    change_i = 1'b0;
+    #100            
+    change_i = 1'b1;
+    
+    #1000           
+    change_i = 1'b0;
+    #100            
+    change_i = 1'b1;
+    
+    #1000           
+    change_i = 1'b0;
+    #100            
+    change_i = 1'b1;
+    
+    #1000           
+    change_i = 1'b0;
+    #100            
+    change_i = 1'b1;
+    
+    #1000           
+    change_i = 1'b0;
+    #100            
+    change_i = 1'b1;
+    
+    #1000           
+    change_i = 1'b0;
+    #100            
+    change_i = 1'b1;
+    
+    #1000           
+    change_i = 1'b0;
+    #100            
+    change_i = 1'b1;
+    
+    #1000           
+    change_i = 1'b0;
+    #100            
+    change_i = 1'b1;
+    
     #1000           
     change_i = 1'b0;
     #100            
@@ -114,8 +187,6 @@ localparam CLK_SEMIPERIOD = (1000/CLK_FREQ_MHZ/2);
     change_i = 1'b0;
     #100
     change_i = 1'b1;
-    
-    
     
   end
 
