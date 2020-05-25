@@ -38,8 +38,24 @@ module tb_stopwatch;
   initial begin
     #CLK_PERIOD start_stop = 1;
     #CLK_PERIOD start_stop = 0;
-    #(CLK_PERIOD * 45) start_stop = 1;
-    #CLK_PERIOD start_stop = 0;
+    //#(CLK_PERIOD * 45) start_stop = 1;
+    //#CLK_PERIOD start_stop = 0;
+    //#(CLK_PERIOD * 5) start_stop = 1;
+    //#CLK_PERIOD start_stop = 0;
+  end
+  
+  initial begin
+    #( CLK_PERIOD * 10 );
+    repeat ( 2 ) begin
+      #( CLK_PERIOD * 5 ) set = 1;
+      #( CLK_PERIOD * 5 ) set = 0;
+    end
+    #( CLK_PERIOD * 5 ) change = 1;
+    #( CLK_PERIOD * 5 ) change = 0;
+    repeat ( 3 ) begin
+      #( CLK_PERIOD * 5 ) set = 1;
+      #( CLK_PERIOD * 5 ) set = 0;
+    end
   end
   
   stopwatch  DUT (
