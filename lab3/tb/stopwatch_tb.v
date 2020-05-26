@@ -38,22 +38,50 @@
   end
 
   initial begin
-   change_i = 1'b0;
-    rstn_i = 1'b0;
-    #10 rstn_i = 1'b1;
-    set_i    = 1'b0;
-    #30set_i    = 1'b1;
-    #30set_i    = 1'b0;
    
-    
-    
-    
+   rstn_i = 1'b0;
+   #(5*CLK_SEMIPERIOD) rstn_i = 1'b1;
+  end
+
+  initial begin
+    set_i = 1'b0;
+   // #(3*CLK_SEMIPERIOD) set_i = 1'b1;
+   // #(3*CLK_SEMIPERIOD) set_i = 1'b0;
+   // #(5*CLK_SEMIPERIOD) set_i = 1'b1;
+   // #(5*CLK_SEMIPERIOD) set_i = 1'b0;
+   // #(3*CLK_SEMIPERIOD) set_i = 1'b1;
+   // #(3*CLK_SEMIPERIOD) set_i = 1'b0;
+   //  #(3*CLK_SEMIPERIOD) set_i = 1'b1;
+   // #(3*CLK_SEMIPERIOD) set_i = 1'b0;
+   //  #(3*CLK_SEMIPERIOD) set_i = 1'b1;
+   // #(3*CLK_SEMIPERIOD) set_i = 1'b0;
+   //  #(3*CLK_SEMIPERIOD) set_i = 1'b1;
+   // #(3*CLK_SEMIPERIOD) set_i = 1'b0;
     
   end
   
   initial begin
+    change_i = 1'b0;
+    
+    #(4*CLK_SEMIPERIOD)   change_i = 1'b1;
+    #(CLK_SEMIPERIOD)   change_i = 1'b0;
+    
+    #(4*CLK_SEMIPERIOD)   change_i = 1'b1;
+    #(CLK_SEMIPERIOD)   change_i = 1'b0;
+    
+    #(4*CLK_SEMIPERIOD)   change_i = 1'b1;
+    #(CLK_SEMIPERIOD)   change_i = 1'b0;
+    
+    #(4*CLK_SEMIPERIOD)   change_i = 1'b1;
+    #(CLK_SEMIPERIOD)   change_i = 1'b0;
+    
+    #(4*CLK_SEMIPERIOD)   change_i = 1'b1;
+    #(CLK_SEMIPERIOD)   change_i = 1'b0;
+  end
+  
+  initial begin
     start_stop_i = 1'b0;
-    //#80 start_stop_i = 1'b1;
+    #(3*CLK_SEMIPERIOD) start_stop_i = 1'b1;
     //#300 start_stop_i = 1'b0;
   end
   
