@@ -48,55 +48,65 @@ module stopwatch(
 
 
   // состояние stopwatch
-  reg [2:0] state_stopwatch = 3'd0;
-  reg [2:0] next_state_stopwatch;
+  reg state_stopwatch;
+  reg next_state_stopwatch;
   
-  localparam state_wait      = 3'd0;
-  localparam state_work      = 3'd1;
-  localparam state_set_0_01s = 3'd2;
-  localparam state_set_0_1s  = 3'd3;
-  localparam state_set_1s    = 3'd4;
-  localparam state_set_10s   = 3'd5;
+  localparam STATE_DEF       = 1'd0;
+  localparam STATE_SET       = 1'd1;
+  
+  localparam STATE_SET_0_01S = 2'd0;
+  localparam STATE_SET_0_1S  = 2'd1;
+  localparam STATE_SET_1S    = 2'd2;
+  localparam STATE_SET_10S   = 2'd3;
   
   always @ ( * ) begin
     case ( state_stopwatch )
-      state_wait:       if ( btn_start_pressed ) next_state_stopwatch = state_work;
-                        else if ( btn_set_pressed ) next_state_stopwatch = state_set_0_01s;
-                        //else next_state_stopwatch <= state_wait;
-                  
-      state_work:       if ( btn_start_pressed ) next_state_stopwatch = state_wait;
-                        //else next_state_stopwatch = state_wait;
-      
-      state_set_0_01s:  if ( btn_set_pressed ) next_state_stopwatch = state_set_0_1s;
-                        //else next_state_stopwatch = state_wait;
-                        
-      state_set_0_1s:   if ( btn_set_pressed ) next_state_stopwatch = state_set_1s;
-                        //else next_state_stopwatch = state_wait;
-                        
-      state_set_1s:     if ( btn_set_pressed ) next_state_stopwatch = state_set_10s;
-                        //else next_state_stopwatch = state_wait;
-                        
-      state_set_10s:    if ( btn_set_pressed ) next_state_stopwatch = state_wait;
-                        //else next_state_stopwatch = state_wait;
-      
-      default:          next_state_stopwatch <= state_wait;
+      STATE_DEF:  if ( btn_set_pressed )   next_state_stopwatch = STATE_SET;
+      STATE_SET:  if ( btn_start_pressed ) next_state_stopwatch = STATE_DEF;
     endcase
   end
   
-  always @ ( * ) begin
+  always @ ( posedge clk100_i or negedge rstn_i ) begin
     if ( !rstn_i )
-      state_stopwatch <= state_wait;
+      state_stopwatch <= STATE_DEF;
     else
       state_stopwatch <= next_state_stopwatch;
   end
+  
+  reg [1:0] state_set;
+  reg [1:0] next_state_set;
+  
+  always @ ( * ) begin
+    if ( state_stopwatch )
+      case ( state_set )
+                        
+        STATE_SET_0_01S:  if ( btn_set_pressed ) next_state_set = STATE_SET_0_1S;
+                          //else next_state_set = STATE_SET_0_01S;                  
+                        
+        STATE_SET_0_1S:   if ( btn_set_pressed ) next_state_set = STATE_SET_1S;
+                          //else next_state_set = STATE_SET_0_01S;
+                        
+        STATE_SET_1S:     if ( btn_set_pressed ) next_state_set = STATE_SET_10S;
+                          //else next_state_set = STATE_SET_0_01S;
+                        
+        STATE_SET_10S:    if ( btn_set_pressed ) next_state_set = STATE_SET_0_01S;
+                          //else next_state_set = STATE_SET_0_01S;
+      endcase
+  end
 
- 
+  always @ ( posedge clk100_i or negedge rstn_i) begin
+      if ( !rstn_i )
+        state_set <= STATE_SET_0_01S;
+      else
+        state_set <= next_state_set;
+  end
 
   // вкл/выкл девайса
   reg dev_run = 1'b0;
   always @ ( posedge clk100_i ) begin
-    if ( btn_start_pressed )
-      dev_run <= ~dev_run;
+    if ( state_stopwatch == STATE_DEF )
+      if ( btn_start_pressed )
+        dev_run <= ~dev_run;
   end
 
 
@@ -108,7 +118,7 @@ module stopwatch(
   always @ ( posedge clk100_i or negedge rstn_i) begin
     if ( !rstn_i )
       pulse_counter <= 0; 
-    else if ( state_stopwatch == state_work )
+    else if ( state_stopwatch == STATE_DEF )
      if ( dev_run | hundredth_of_second_passed )
        if ( hundredth_of_second_passed )
          pulse_counter <= 0;
@@ -123,14 +133,14 @@ module stopwatch(
   always @ ( posedge clk100_i or negedge rstn_i ) begin
     if ( !rstn_i )
        hundredths_counter <= 0;
-    else if ( state_stopwatch == state_set_0_01s )
+    else if ( state_stopwatch == STATE_SET & state_set == STATE_SET_0_01S )
       begin
         if ( hundredths_counter == 4'd9 ) 
             hundredths_counter <= 0; 
         if ( btn_change_pressed )
           hundredths_counter <= hundredths_counter + 1;
       end
-    else if ( state_stopwatch == state_work )
+    else if ( state_stopwatch == STATE_DEF )
       if ( hundredth_of_second_passed )
         if ( tenth_of_second_passed )
           hundredths_counter <= 0;
@@ -145,14 +155,14 @@ module stopwatch(
   always @ ( posedge clk100_i or negedge rstn_i)  begin
     if ( !rstn_i )
       tenths_counter <= 0;
-    else if ( state_stopwatch == state_set_0_1s )
+    else if ( state_stopwatch == STATE_SET & state_set == STATE_SET_0_1S )
       begin
         if ( tenths_counter == 4'd9 ) 
             tenths_counter <= 0; 
         if ( btn_change_pressed )
           tenths_counter <= tenths_counter + 1;
       end
-    else if ( state_stopwatch == state_work )
+    else if ( state_stopwatch == STATE_DEF )
       if ( tenth_of_second_passed )
         if ( second_passed ) 
           tenths_counter <= 0; 
@@ -167,14 +177,14 @@ module stopwatch(
   always @ ( posedge clk100_i or negedge rstn_i)  begin
     if ( !rstn_i )
       seconds_counter <= 0;
-    else if ( state_stopwatch == state_set_1s )
+    else if ( state_stopwatch == STATE_SET & state_set == STATE_SET_1S )
       begin
         if ( seconds_counter == 4'd9 ) 
           seconds_counter <= 0; 
         if ( btn_change_pressed )
           seconds_counter <= seconds_counter + 1;
       end
-    else if ( state_stopwatch == state_work )
+    else if ( state_stopwatch == STATE_DEF )
       if  ( second_passed )
         if ( ten_seconds_passed ) 
           seconds_counter <= 0; 
@@ -188,14 +198,14 @@ module stopwatch(
   always @ ( posedge clk100_i or negedge rstn_i)  begin
     if ( !rstn_i )
       ten_seconds_counter <= 0;
-    else if ( state_stopwatch == state_set_10s )
+    else if ( state_stopwatch == STATE_SET & state_set == STATE_SET_10S )
       begin
         if ( ten_seconds_counter == 4'd9 ) 
             ten_seconds_counter <= 0; 
         if ( btn_change_pressed )
           ten_seconds_counter <= ten_seconds_counter + 1;
       end
-    else if ( state_stopwatch == state_work )
+    else if ( state_stopwatch == STATE_DEF )
       if ( ten_seconds_passed )
         if ( ten_seconds_counter == 4'd9 ) 
           ten_seconds_counter <= 0; 

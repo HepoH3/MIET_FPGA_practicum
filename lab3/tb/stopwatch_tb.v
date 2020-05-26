@@ -38,18 +38,23 @@
   end
 
   initial begin
+   change_i = 1'b0;
+    rstn_i = 1'b0;
+    #10 rstn_i = 1'b1;
     set_i    = 1'b0;
-    change_i = 1'b0;
-    rstn_i = 1'b1;
+    #30set_i    = 1'b1;
+    #30set_i    = 1'b0;
+   
+    
+    
+    
+    
   end
   
   initial begin
     start_stop_i = 1'b0;
-    #100 start_stop_i = 1'b1;
-    #300 start_stop_i = 1'b0;
-    //forever begin
-      //#(2*CLK_SEMIPERIOD) start_stop_i = ~start_stop_i;
-    //end
+    //#80 start_stop_i = 1'b1;
+    //#300 start_stop_i = 1'b0;
   end
   
 endmodule
