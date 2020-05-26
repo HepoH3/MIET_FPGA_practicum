@@ -31,25 +31,43 @@ wire       btn_start_was_pressed;
 wire       btn_set_was_pressed;
 wire       btn_change_was_pressed;
 
-decoder u1 (
-  .hundredths_counter  ( hundredths_counter  ),
-  .tenths_counter      ( tenths_counter      ),
-  .seconds_counter     ( seconds_counter     ),
-  .ten_seconds_counter ( ten_seconds_counter ),
-  .hex0_o              ( hex0_o              ),
-  .hex1_o              ( hex1_o              ),
-  .hex2_o              ( hex2_o              ),
-  .hex3_o              ( hex3_o              )
+decoder d1 (
+  .counter_i       ( hundredths_counter     ),
+  .hex_o           ( hex0_o                 )
 );
 
-button_sync u2(
-  .clk100_i               ( clk100_i               ),
-  .start_stop_i           ( start_stop_i           ),
-  .set_i                  ( set_i                  ),
-  .change_i               ( change_i               ),
-  .btn_start_was_pressed  ( btn_start_was_pressed  ),
-  .btn_set_was_pressed    ( btn_set_was_pressed    ),
-  .btn_change_was_pressed ( btn_change_was_pressed )
+decoder d2 (
+  .counter_i       ( tenths_counter         ),
+  .hex_o           ( hex1_o                 )
+);
+
+decoder d3 (
+  .counter_i       ( seconds_counter        ),
+  .hex_o           ( hex2_o                 )
+);
+
+decoder d4 (
+  .counter_i       ( ten_seconds_counter    ),
+  .hex_o           ( hex3_o                 )
+);
+
+button_sync bs1(
+  .clk100_i        ( clk100_i               ),
+  .btn_i           ( start_stop_i           ),
+  .btn_was_pressed ( btn_start_was_pressed  )
+);
+
+button_sync bs2(
+  .clk100_i        ( clk100_i               ),
+  .btn_i           ( set_i                  ),
+  .btn_was_pressed ( btn_set_was_pressed    )
+);
+
+
+button_sync bs3(
+  .clk100_i        ( clk100_i               ),
+  .btn_i           ( change_i               ),
+  .btn_was_pressed ( btn_change_was_pressed )
 );
 
 
