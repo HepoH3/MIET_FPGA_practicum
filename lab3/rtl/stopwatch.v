@@ -31,16 +31,16 @@ pressButton Change(
   .clk_i                     ( clk100_i                    ),
   .arstn_i                   ( rstn_i                      ),
   .button_i                  ( change_i                    ),
-  .button_down_o             ( change_was_press            )
+  .button_down_o             ( change_was_pressed          )
     );
 
 //
-wire hundredths_o;
-wire tenths_o;
-wire seconds_o;
-wire ten_seconds_o;
-wire state;
-wire device_running;
+wire [3:0] hundredths_o;
+wire [3:0] tenths_o;
+wire [3:0] seconds_o;
+wire [3:0] ten_seconds_o;
+wire       state;
+wire       device_running;
 StateMachine lol(
   .clk_i                     ( clk100_i                    ),
   .arstn_i                   ( rstn_i                      ),
@@ -51,7 +51,7 @@ StateMachine lol(
   .tenths_counter            ( tenths_o                    ),
   .seconds_counter           ( seconds_o                   ),
   .ten_seconds_counter       ( ten_seconds_o               ),
-  .state                     (state                        )
+  .state                     ( state                       )
 );
 //Device running
 
@@ -59,19 +59,19 @@ device_enable #(0) Running(
   .clk_i                     ( clk100_i                    ),
   .buttonn_was_pressed       ( start_stop_was_pressed      ),
   .state_device              ( state                       ),
-  .signal_o                  ( device_runni                )
+  .signal_o                  ( device_running              )
 );
 //Pulse counter
 wire hundredths_of_second_passed;
-pulse_counter #(17,259999) Pulse(
+pulse_counter #(17,10) Pulse(
   .clk_i                     ( clk100_i                    ),
   .arstn_i                   ( rstn_i                      ),
   .device_running_i          ( device_running              ),
   .signal_o                  ( hundredths_of_second_passed )
 );
 //Stopwatch
-wire tenths_of_second_passed;
-wire hex0_i;
+wire       tenths_of_second_passed;
+wire [3:0] hex0_i;
 stopwatch_counter #(9) hundredths_of_second(
   .clk_i                     ( clk100_i                    ),
   .arstn_i                   ( rstn_i                      ),
@@ -81,8 +81,8 @@ stopwatch_counter #(9) hundredths_of_second(
   .digit_counter             ( hundredths_o                )
 );
 
-wire second_passed;
-wire hex1_i;
+wire       second_passed;
+wire [3:0] hex1_i;
 stopwatch_counter #(9) tenths_of_second(
   .clk_i                     ( clk100_i                    ),
   .arstn_i                   ( rstn_i                      ),
@@ -92,8 +92,8 @@ stopwatch_counter #(9) tenths_of_second(
   .digit_counter             ( tenths_o                    )
 );
 
-wire ten_seconds_passed;
-wire hex2_i;
+wire       ten_seconds_passed;
+wire [3:0] hex2_i;
 stopwatch_counter #(9) seconds(
   .clk_i                    ( clk100_i                    ),
   .arstn_i                  ( rstn_i                      ),
@@ -103,7 +103,7 @@ stopwatch_counter #(9) seconds(
   .digit_counter            ( seconds_o                   )
 );
 
-wire hex3_i;
+wire [3:0] hex3_i;
 stopwatch_counter #(9) ten_seconds(
   .clk_i               ( clk100_i                    ),
   .arstn_i             ( rstn_i                      ),

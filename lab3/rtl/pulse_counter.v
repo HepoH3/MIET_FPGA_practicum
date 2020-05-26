@@ -16,7 +16,7 @@ wire                    pulse_passed  = ( pulse_counter == PULSE_MAX );
 
 always @( posedge clk_i or negedge arstn_i ) begin
   if ( !arstn_i ) 
-    pulse_counter <= 0;
+    pulse_counter <= { 17 { 17'b0 } };
   else if ( ~device_running_i | pulse_passed )
   begin
     if ( pulse_passed )

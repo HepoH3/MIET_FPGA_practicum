@@ -1,28 +1,32 @@
 `timescale 1ns / 1ps
 
 module stopwatch_counter(
-input        clk_i,
-input        arstn_i,
-input        pulse_passed,
-input        digit_counter,
+input         clk_i,
+input         arstn_i,
+input         pulse_passed,
+input  [3:0]  digit_counter,
 
-output [3:0] senior_digit_passed,
-output [6:0] hex_number
+output        senior_digit_passed,
+output [3:0]  hex_number
     );
     
 parameter  COUNTER_MAX = 4'd9;
 
-reg        digit_counter_buff;
-wire       digit_passed = 
+reg    [3:0] digit_counter_buff = 4'd0;
+wire         digit_passed = 
         ( ( digit_counter_buff == COUNTER_MAX ) & pulse_passed );
+
+always @(digit_counter) begin
+assign digit_counter_buff = digit_counter;
+end
 
 always @( posedge clk_i or negedge arstn_i ) begin
   if ( !arstn_i ) 
-    digit_counter_buff <= 0;
+    digit_counter_buff <= { 4 { 1'b0 } };
   else if ( pulse_passed ) 
   begin
     if ( digit_passed )
-      digit_counter_buff <= 0;
+      digit_counter_buff <= { 4 { 1'b0 } };
     else
       digit_counter_buff <= digit_counter_buff + 1;
   end

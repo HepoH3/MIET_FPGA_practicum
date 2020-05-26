@@ -1,27 +1,33 @@
 `timescale 1ns / 1ps
 
 module StateMachine(
-  input      clk_i,
-  input      arstn_i,
-  input      device_running_i,
-  input      button_set_was_pressed,
-  input      button_change_was_pressed,
+  input            clk_i,
+  input            arstn_i,
+  input            device_running_i,
+  input            button_set_was_pressed,
+  input            button_change_was_pressed,
   
-  output reg hundredths_counter,
-  output reg tenths_counter,
-  output reg seconds_counter,
-  output reg ten_seconds_counter,
-  output reg state              = DEFAULT
+  output reg [3:0] hundredths_counter  = 4'd0,
+  output reg [3:0] tenths_counter      = 4'd0,
+  output reg [3:0] seconds_counter     = 4'd0,
+  output reg [3:0] ten_seconds_counter = 4'd0,
+  output reg       state               = 1'd0
     );
     
 localparam  DEFAULT             = 1'd0;
 localparam  SET                 = 1'd1;
 reg  [1:0]  current_hex         = 2'b0;
 reg         next_state;
+
+reg [3:0] hundredths_counter1  = 4'd0;
+reg [3:0] tenths_counter1      = 4'd0;
+reg [3:0] seconds_counter1     = 4'd0;
+reg [3:0] ten_seconds_counter  = 4'd0;
+
 always @( * ) 
 begin
   case ( state )
-    DEFAULT : if ( button_set_was_pressed && ~device_running_i )
+    DEFAULT : if ( button_set_was_pressed && device_running_i )
                           next_state = SET;
                         else
                           next_state = DEFAULT;
