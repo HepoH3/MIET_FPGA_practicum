@@ -1,6 +1,7 @@
 `timescale 1ns / 1ps
 
 module debounce_remover (
+
   // Clock input
   input  clk100_i,
   
@@ -27,5 +28,4 @@ module debounce_remover (
   end
 
   assign button_was_pressed_o = ~button_sync_data[2] & button_sync_data[1];
-
 endmodule

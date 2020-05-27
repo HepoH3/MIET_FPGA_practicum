@@ -30,7 +30,6 @@ module tb_decoder;
   
   decoder  DUT (
     .counter_i               ( counter_data [3:0] ),
-    
     .hex_o                   ( hex          [6:0] )
   );
 endmodule

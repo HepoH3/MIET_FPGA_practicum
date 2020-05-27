@@ -7,9 +7,7 @@ module tb_stopwatch;
   localparam CLK_SEMIPERIOD = 1000 / CLK_FREQ_MHZ / 2;
   
   reg        clk100;
-  
   reg        rstn;
-  
   reg        start_stop;
   reg        set;
   reg        change;
@@ -18,7 +16,6 @@ module tb_stopwatch;
   wire [6:0] hex1;
   wire [6:0] hex2;
   wire [6:0] hex3;
-  
   
   // Clock generation
   initial begin
@@ -34,43 +31,15 @@ module tb_stopwatch;
     rstn = 1;
   end
   
-  // Start/Stop device
-  initial begin
-    #CLK_PERIOD start_stop = 1;
-    #CLK_PERIOD start_stop = 0;
-    //#(CLK_PERIOD * 45) start_stop = 1;
-    //#CLK_PERIOD start_stop = 0;
-    //#(CLK_PERIOD * 5) start_stop = 1;
-    //#CLK_PERIOD start_stop = 0;
-  end
-  
-  initial begin
-    #( CLK_PERIOD * 10 );
-    repeat ( 2 ) begin
-      #( CLK_PERIOD * 5 ) set = 1;
-      #( CLK_PERIOD * 5 ) set = 0;
-    end
-    #( CLK_PERIOD * 5 ) change = 1;
-    #( CLK_PERIOD * 5 ) change = 0;
-    repeat ( 3 ) begin
-      #( CLK_PERIOD * 5 ) set = 1;
-      #( CLK_PERIOD * 5 ) set = 0;
-    end
-  end
-  
   stopwatch  DUT (
     .clk100_i                ( clk100     ),
-    
     .rstn_i                  ( rstn       ),
-    
     .start_stop_i            ( start_stop ),
     .set_i                   ( set        ),
     .change_i                ( change     ),
-    
     .hex0_o                  ( hex0       ),
     .hex1_o                  ( hex1       ),
     .hex2_o                  ( hex2       ),
     .hex3_o                  ( hex3       )
   );
-  
 endmodule

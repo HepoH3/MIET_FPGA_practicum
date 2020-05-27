@@ -7,13 +7,10 @@ module tb_debounce_remover;
   localparam CLK_SEMIPERIOD = 1000 / CLK_FREQ_MHZ / 2;
   
   reg  clk100;
-  
   reg  rstn;
-  
   reg  button;
   
   wire button_was_pressed;
-  
   
   // Clock generation
   initial begin
@@ -45,12 +42,8 @@ module tb_debounce_remover;
   
   debounce_remover DUT (
     .clk100_i                ( clk100             ),
-    
     .rstn_i                  ( rstn               ),
-    
     .button_i                ( button             ),
-    
     .button_was_pressed_o    ( button_was_pressed )
   );
-  
 endmodule

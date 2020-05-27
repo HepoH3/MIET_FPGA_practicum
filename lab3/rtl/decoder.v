@@ -1,6 +1,7 @@
 `timescale 1ns / 1ps
 
-module decoder(
+module decoder (
+
   // Data input
   input  [3:0] data_i,
   
