@@ -16,15 +16,15 @@ wire [6:0]   hex2_o;
 wire [6:0]   hex3_o;
 
 stopwatch DUT (
-  .clk100_i        ( clk100_i),
-  .start_stop_i    ( start_stop_i   ),
-  .hex1_o          ( hex1_o  ),
-  .hex0_o          ( hex0_o  ),
-  .hex2_o          ( hex2_o  ),
-  .hex3_o          ( hex3_o  ),
-  .rstn_i          ( rstn_i  ),
-  .change_i        ( change_i ),
-  .set_i           ( set_i )
+  .clk100_i        ( clk100_i     ),
+  .start_stop_i    ( start_stop_i ),
+  .hex0_o          ( hex0_o       ),
+  .hex1_o          ( hex1_o       ),
+  .hex2_o          ( hex2_o       ),
+  .hex3_o          ( hex3_o       ),
+  .rstn_i          ( rstn_i       ),
+  .change_i        ( change_i     ),
+  .set_i           ( set_i        )
 );
 
 initial begin

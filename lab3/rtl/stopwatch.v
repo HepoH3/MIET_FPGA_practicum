@@ -1,7 +1,9 @@
 `timescale 1ns / 1ps
 
-module stopwatch(
-input        clk100_i,
+module stopwatch #(
+parameter PULSE_MAX = 20'd499999 )
+(
+  input        clk100_i,
   input        rstn_i,
   input        start_stop_i,
   input        set_i,
@@ -11,6 +13,12 @@ input        clk100_i,
   output [6:0] hex2_o,
   output [6:0] hex3_o
 );
+
+localparam IDLE     = 3'd0;
+localparam CHANGE_1 = 3'd1;
+localparam CHANGE_2 = 3'd2;
+localparam CHANGE_3 = 3'd3;
+localparam CHANGE_4 = 3'd4;
 
 wire start;
 wire change;
@@ -37,37 +45,36 @@ key_deb change_bt(
   .clk_i      ( clk100_i  )
 );
 
-reg  [3:0] q;
-reg        device_run;
-wire       device_stop;
+wire [3:0] q;
+wire [2:0] fsm;
+wire       increment;
 
-assign device_stop = ( device_run ) ? 1'b0:
-                                      1'b1;
+reg        device_run;
  
 always @( posedge clk100_i or negedge rstn_i ) begin
   if( !rstn_i )
-    device_run = 1'b0;
+    device_run <= 1'b0;
   else begin
     if( start && device_run )
-      device_run = 1'b0;
+      device_run <= 1'b0;
     else
-      if( start && device_stop && q == 0)
-        device_run = 1'b1;
+      if( start & !device_run & q == 0 )
+        device_run <= 1'b1;
   end
 end
 
-reg  [16:0] count;
+reg  [19:0] count;
 wire        sto_secund;
 
-assign sto_secund = ( count == 17'd25999 );
+assign sto_secund = ( count == PULSE_MAX );
 
 always @( posedge clk100_i or negedge rstn_i ) begin
   if( !rstn_i )
-    count <= 17'd0;
+    count <= 20'd0;
   else
-    if( device_run || sto_secund )
+    if( device_run | sto_secund )
       if( sto_secund )
-        count <= 17'd0;
+        count <= 20'd0;
       else
         count <= count + 1;
 end
@@ -81,16 +88,14 @@ always @( posedge clk100_i or negedge rstn_i ) begin
   if( !rstn_i )
     count_100 <= 4'd0;
   else
-    if( !set && change && device_stop ) begin
-      if( q == 1 && count_100 < 4'd9 )
-        count_100 <= count_100 + 1;
+    if( sto_secund ) 
+      if( tens_secund )
+        count_100 <= 4'd0;
       else
-        if( q == 1 )
-          count_100 <= 0;
-    end
-      else
-        if( sto_secund )
-          if( tens_secund )
+          count_100 <= count_100 + 1;
+    else
+        if( fsm == CHANGE_1 & increment )
+          if( count_100 ==4'd9 )
             count_100 <= 4'd0;
           else
             count_100 <= count_100 + 1;
@@ -105,19 +110,17 @@ always @( posedge clk100_i or negedge rstn_i ) begin
   if( !rstn_i )
     count_10 <= 4'd0;
   else
-    if( !set && change && device_stop ) begin
-      if( q == 2 && count_10 < 4'd9 )
+    if( tens_secund )
+      if( second_pas )
+        count_10 <= 4'd0;
+      else
         count_10 <= count_10 + 1;
-      else
-        if( q == 2 )
-          count_10 <= 0;
-    end
-      else
-        if( tens_secund )
-          if( second_pas )
-            count_10 <= 4'd0;
-          else
-            count_10 <= count_10 + 1;
+    else
+      if( fsm == CHANGE_2 & increment )
+        if( count_10 == 4'd9 )
+          count_10 <= 4'd0;
+        else
+          count_10 <= count_10 + 1;
 end
 
 reg  [3:0] secun_count;
@@ -129,19 +132,17 @@ always @( posedge clk100_i or negedge rstn_i ) begin
   if( !rstn_i )
     secun_count <= 4'd0;
   else
-    if( !set && change && device_stop ) begin
-      if( q == 3 && secun_count < 4'd9 )
+    if( second_pas )
+      if( ten_sec_pas )
+        secun_count <= 4'd0;
+      else
         secun_count <= secun_count + 1;
-      else
-        if( q == 3 )
-          secun_count <= 0;
-    end
-      else
-        if( second_pas )
-          if( ten_sec_pas )
-            secun_count <= 4'd0;
-          else
-            secun_count <= secun_count + 1;
+    else
+      if( fsm == CHANGE_3 & increment )
+        if( secun_count == 4'd9 )
+          secun_count <= 4'd0;
+        else
+          secun_count <= secun_count + 1;
 end
 
 reg [3:0] ten_sec_count;
@@ -150,38 +151,22 @@ always @( posedge clk100_i or negedge rstn_i ) begin
   if( !rstn_i )
     ten_sec_count <= 4'd0;
   else
-    if( !set && change && device_stop ) begin
-      if( q == 4 && ten_sec_count < 4'd9 )
+    if( ten_sec_pas )
+      if( ten_sec_count == 4'd9 )
+        ten_sec_count <= 4'd0;
+      else
         ten_sec_count <= ten_sec_count + 1;
-      else
-        if( q == 4 )
-          ten_sec_count <= 0;
-    end
-      else
-        if( ten_sec_pas )
-          if( ten_sec_count == 4'd9 )
-            ten_sec_count <= 4'd0;
-          else
-            ten_sec_count <= ten_sec_count + 1;
-end
-
-always @( posedge clk100_i or negedge rstn_i ) begin
-  if( !rstn_i ) begin
-    q <= 4'd0;
-  end
-  else
-    if( device_stop ) begin
-      if( !start && set && q < 4 )
-        q <= q + 1;
-      else
-        if( set && q == 4 )
-          q <= 4'd0;
-    end
+    else
+      if( fsm == CHANGE_4 & increment )
+        if( ten_sec_count == 4'd9 )
+          ten_sec_count <= 4'd0;
+        else
+          ten_sec_count <= ten_sec_count + 1;
 end
 
 dc_hex dec3(
   .in ( ten_sec_count ),
-  .out( hex3_o              )
+  .out( hex3_o        )
 );
 
 dc_hex dec2(
@@ -198,4 +183,17 @@ dc_hex dec0(
   .in ( count_100 ),
   .out( hex0_o    )
 );
+
+stopwatch_fs mac(
+  .clk_i        ( clk100_i   ),
+  .rstn_i       ( rstn_i     ),
+  .device_run_i ( device_run ),
+  .set_i        ( set        ),
+  .start_i      ( start      ),
+  .change_i     ( change     ),
+  .state_o      ( fsm        ),
+  .inc_o        ( increment  ),
+  .q            ( q          )
+);
+
 endmodule
