@@ -13,6 +13,17 @@ module stopwatch(
 );
 
 
+
+reg   [2:0]  state, next_state;
+reg   [4:0]  ten_seconds_max, seconds_max, tenths_max, hundredths_max;
+
+
+localparam  IDLE      = 4'd0;
+localparam  NO_IDLE_0 = 4'd1;
+localparam  NO_IDLE_1 = 4'd2;
+localparam  NO_IDLE_2 = 4'd3;
+localparam  NO_IDLE_3 = 4'd4;
+
 wire      start_stop_was_pressed;
 button_pullup btn_str_stp(
   .button_i     ( start_stop_i            ),
@@ -38,20 +49,6 @@ button_pullup btn_change(
 );
 
 
-
-reg   [2:0]  state, next_state;
-reg   [4:0]  ten_seconds_max, seconds_max, tenths_max, hundredths_max;
-
-
-localparam  IDLE      = 4'd0;
-localparam  NO_IDLE_0 = 4'd1;
-localparam  NO_IDLE_1 = 4'd2;
-localparam  NO_IDLE_2 = 4'd3;
-localparam  NO_IDLE_3 = 4'd4;
-
-
-
-
 // qeq device_running DIY
 reg device_running;
 
@@ -63,7 +60,7 @@ always @( posedge clk100_i or posedge rstn_i ) begin
 end
 
 assign device_stopped = ~ ( device_running) ;
-//qeq 
+//qeq
 
 
 
@@ -71,7 +68,7 @@ assign device_stopped = ~ ( device_running) ;
 always @ ( posedge clk100_i or posedge rstn_i ) begin
   if (rstn_i) begin
     state <= IDLE;
-    hundredths_max  <= 1;
+    hundredths_max  <= 1; //parameterize the limits
     tenths_max      <= 4;
     seconds_max     <= 8;
     ten_seconds_max <= 8;
@@ -88,7 +85,7 @@ always @ ( * ) begin
     NO_IDLE_0:  if( set_was_pressed ) next_state <= NO_IDLE_1;
                 else if ( change_was_pressed ) begin
                     if ( hundredths_max  == 9 ) hundredths_max <= 0;
-                    else hundredths_max = hundredths_max + 1;
+                    else hundredths_max = hundredths_max + 1; //parameterize the limits
                     next_state <= NO_IDLE_0;
                   end
                 else     next_state <= NO_IDLE_0;
@@ -118,11 +115,6 @@ always @ ( * ) begin
                 else     next_state <= NO_IDLE_3;
     endcase
 end
-
-
-
-
-
 
 
 
@@ -196,7 +188,7 @@ hex hex2 (
 hex hex1 (
   .counter_i  ( tenths_counter      ),
   .hex_o      ( hex1_o              )
-  );  
+  );
 
 hex hex0 (
   .counter_i  ( hundredths_counter  ),
