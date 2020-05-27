@@ -40,9 +40,11 @@ localparam CLK_SEMIPERIOD = (1000/CLK_FREQ_MHZ/2);
 
     #10
     set_i = 1'b0;
+    start_stop_i = 1'b0;
     #10
     set_i = 1'b1;
     #10
+    start_stop_i = 1'b0;
     set_i = 1'b0;
     #10
     set_i = 1'b1;
@@ -54,63 +56,48 @@ localparam CLK_SEMIPERIOD = (1000/CLK_FREQ_MHZ/2);
     set_i = 1'b0;
     #10
     set_i = 1'b1;
-
+    #10
+    set_i = 1'b0;
+    #10
+    set_i = 1'b1;
+    
 
     //00.01
     #100
     change_i = 1'b0;
     #100
     change_i = 1'b1;
-
-    #1000
-    set_i = 1'b0;   
-    #100            
-    set_i = 1'b1;   
-
-    //00.10            
-    #1000           
-    change_i = 1'b0;
-    #100            
-    change_i = 1'b1;
-
-    #100
-    set_i = 1'b0;
-    #100
-    set_i = 1'b1;
-
-    //01.00
-    #1000
-    change_i = 1'b0;
-    #100
-    change_i = 1'b1;
-
-    #1000
-    set_i = 1'b0;   
-    #100            
-    set_i = 1'b1;   
-
-    //10.00             
-    #1000           
-    change_i = 1'b0;
-    #100            
-    change_i = 1'b1;
-
-    #100000
-    set_i = 1'b0;   
-    #100            
-    set_i = 1'b1;  
-
-    #1000
     start_stop_i = 1'b0;
-    #100
-    start_stop_i = 1'b1;
+    #10
+    start_stop_i = 1'b0;
 
-    #10000
+    set_i = 1'b0;
+    #10
+    set_i = 1'b1;
+    #10
     change_i = 1'b0;
-    #100
+    #10
     change_i = 1'b1;
-
-
+    #10
+    change_i = 1'b0;
+    #10
+    change_i = 1'b1;   // change max hundredth  from 9 to 2 ???????(?x?;)
+    #10
+    set_i = 1'b0;
+    #10
+    set_i = 1'b1;
+    #10
+    set_i = 1'b0;
+    #10
+    set_i = 1'b1;
+    #10
+    set_i = 1'b0;
+    #10
+    set_i = 1'b1;
+    #10
+    set_i = 1'b0;
+    #10
+    set_i = 1'b1;
 
   end
 
