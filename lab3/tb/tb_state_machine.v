@@ -4,18 +4,33 @@ module tb_state_machine;
 
   localparam PERIOD = 20;
   
-  reg  start_stop_was_pressed;
-  reg  set_was_pressed;
-  reg  state;
+  // State machine parameters
+  localparam IDLE                = 0;
+  localparam CHANGE_0_DIGIT_MODE = 1;
+  localparam CHANGE_1_DIGIT_MODE = 2;
+  localparam CHANGE_2_DIGIT_MODE = 3;
+  localparam CHANGE_3_DIGIT_MODE = 4;
   
-  wire next_state;
+  reg        set_was_pressed;
+  reg  [2:0] state;
+  
+  wire [2:0] next_state;
   
   initial begin
-    #PERIOD $finish;
+    state = CHANGE_3_DIGIT_MODE + 1;
+    set_was_pressed = 1;
+    #PERIOD
+    set_was_pressed = 0;
+    #PERIOD
+    state = IDLE;
+    #PERIOD
+    set_was_pressed = 1;
+    #PERIOD
+    set_was_pressed = 0;
+    $finish;
   end
   
   state_machine DUT (
-    .start_stop_was_pressed_i ( start_stop_was_pressed ),
     .set_was_pressed_i        ( set_was_pressed        ),
     .state_i                  ( state                  ),
     .next_state_o             ( next_state             )

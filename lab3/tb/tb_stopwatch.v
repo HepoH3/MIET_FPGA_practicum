@@ -29,6 +29,49 @@ module tb_stopwatch;
     rstn = 0;
     #CLK_SEMIPERIOD
     rstn = 1;
+    #( CLK_PERIOD * 10000 );
+    rstn = 0;
+    #CLK_SEMIPERIOD
+    rstn = 1;
+  end
+  
+  // Start/stop device
+  initial begin
+    #( CLK_PERIOD * 10)
+    forever begin
+      start_stop = 1;
+      #CLK_PERIOD
+      start_stop = 0;
+      #( CLK_PERIOD * 4100 );
+    end
+  end
+  
+  // Set device
+  initial begin
+    #( CLK_PERIOD * 4200 );
+    set = 1;
+    #CLK_PERIOD
+    set = 0;
+    repeat ( 4 ) begin
+      #( CLK_PERIOD * 700 );
+      set = 1;
+      #CLK_PERIOD
+      set = 0;
+    end
+  end
+  
+  // Change device
+  initial begin
+    #( CLK_PERIOD * 4300 );
+    repeat ( 5 ) begin
+      repeat ( 5 ) begin
+        change = 1;
+        #CLK_PERIOD
+        change = 0;
+        #( CLK_PERIOD * 100 );
+      end
+    #( CLK_PERIOD * 200 );
+    end
   end
   
   stopwatch  DUT (
