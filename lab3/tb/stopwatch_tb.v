@@ -45,6 +45,8 @@ initial begin
   #23 start_stop_i  <= 1'b1;
   #150 start_stop_i <= 1'b0;
   #23 start_stop_i  <= 1'b1;
+  #300 start_stop_i  <= 1'b0;
+  #23 start_stop_i  <= 1'b1;
 end
 
 initial begin
@@ -52,10 +54,14 @@ initial begin
   #250;
   repeat(5) begin
     set_i <= 1'b0;
-    #20;
+    #21;
     set_i <= 1'b1;
-    #20;
+    #24;
   end
+  #200;
+  set_i <= 1'b0;
+  #21;
+  set_i <= 1'b1;
 end
 
 
