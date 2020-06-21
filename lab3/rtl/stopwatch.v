@@ -23,7 +23,6 @@ wire       change_down;
 wire       set_down;
 wire [2:0] fsm_state;
 wire       increment;
-wire [3:0] cnt;
 
 reg        device_running;
 
@@ -33,10 +32,10 @@ always @( posedge clk100_i or negedge rstn_i ) begin
     device_running <= 1'b0;
   else
     begin
-    if( start_down & device_running )
+    if( start_down && device_running )
       device_running <= 1'b0;
     else
-      if( start_down & !device_running & cnt == 0 )
+      if( start_down && !device_running && fsm_state == 0 )
         device_running <= 1'b1;
     end
 end
@@ -51,7 +50,7 @@ always @( posedge clk100_i or negedge rstn_i ) begin
   if( !rstn_i )
     pulse_counter <= 20'd0;
   else
-    if( device_running | hundredth_of_second_passed )
+    if( device_running || hundredth_of_second_passed )
       if( hundredth_of_second_passed )
         pulse_counter <= 20'd0;
       else
@@ -62,7 +61,7 @@ end
 reg  [3:0] hundredths_counter;
 wire       tens_of_second_passed;
 
-assign tens_of_second_passed = ( ( hundredths_counter == 4'd9 ) & hundredth_of_second_passed );
+assign tens_of_second_passed = ( ( hundredths_counter == 4'd9 ) && hundredth_of_second_passed );
 
 always @( posedge clk100_i or negedge rstn_i ) begin
   if( !rstn_i )
@@ -74,7 +73,7 @@ always @( posedge clk100_i or negedge rstn_i ) begin
       else
         hundredths_counter <= hundredths_counter + 1;
     else
-      if( fsm_state == CHANGE_H_S & increment )
+      if( fsm_state == CHANGE_H_S && increment )
         if( hundredths_counter == 4'd9 )
           hundredths_counter <= 4'd0;
         else
@@ -85,7 +84,7 @@ end
 reg [3:0] tenths_counter;
 wire      second_passed;
 
-assign second_passed = ( ( tenths_counter == 4'd9 ) & tens_of_second_passed );
+assign second_passed = ( ( tenths_counter == 4'd9 ) && tens_of_second_passed );
 
 always @( posedge clk100_i or negedge rstn_i ) begin
   if( !rstn_i )
@@ -97,7 +96,7 @@ always @( posedge clk100_i or negedge rstn_i ) begin
       else
         tenths_counter <= tenths_counter + 1;
     else
-      if( fsm_state == CHANGE_TS_S & increment )
+      if( fsm_state == CHANGE_TS_S && increment )
         if( tenths_counter == 4'd9 )
           tenths_counter <= 4'd0;
         else
@@ -108,7 +107,7 @@ end
 reg  [3:0] seconds_counter;
 wire       ten_seconds_passed;
 
-assign ten_seconds_passed = ( ( seconds_counter == 4'd9 ) & second_passed );
+assign ten_seconds_passed = ( ( seconds_counter == 4'd9 ) && second_passed );
 
 always @( posedge clk100_i or negedge rstn_i ) begin
   if( !rstn_i )
@@ -120,7 +119,7 @@ always @( posedge clk100_i or negedge rstn_i ) begin
       else
         seconds_counter <= seconds_counter + 1;
     else
-      if( fsm_state == CHANGE_SEC_S & increment )
+      if( fsm_state == CHANGE_SEC_S && increment )
         if( seconds_counter == 4'd9 )
           seconds_counter <= 4'd0;
         else
@@ -139,7 +138,7 @@ always @( posedge clk100_i or negedge rstn_i ) begin
       else
         ten_seconds_counter <= ten_seconds_counter + 1;
     else
-      if( fsm_state == CHANGE_T_S & increment )
+      if( fsm_state == CHANGE_T_S && increment )
         if( ten_seconds_counter == 4'd9 )
           ten_seconds_counter <= 4'd0;
         else
@@ -195,8 +194,7 @@ stopwatch_finite_state editmode(
   .start_i      ( start_down     ),
   .change_i     ( change_down    ),
   .state_value_o( fsm_state      ),
-  .inc_this_o   ( increment      ),
-  .cnt          ( cnt            )
+  .inc_this_o   ( increment      )
 );
 
 endmodule

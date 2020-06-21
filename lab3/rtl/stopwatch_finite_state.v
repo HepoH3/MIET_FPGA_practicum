@@ -8,8 +8,7 @@ module stopwatch_finite_state(
   input        start_i,
   input        change_i,
   output [2:0] state_value_o,
-  output       inc_this_o,
-  output [3:0] cnt
+  output       inc_this_o
 );
 
 reg [2:0] state;
@@ -37,14 +36,14 @@ always @( * ) begin
     IDLE_S:
       begin
         if( !dev_run_i )
-          if( set_i & !start_i )
+          if( set_i && !start_i )
             next_state = CHANGE_H_S;
       end
 
     CHANGE_H_S:
       begin
         if( !dev_run_i ) begin
-          if( set_i & !start_i )
+          if( set_i && !start_i )
             next_state = CHANGE_TS_S;
           if( change_i )
             increm = 1'b1;
@@ -58,7 +57,7 @@ always @( * ) begin
     CHANGE_TS_S:
       begin
         if( !dev_run_i ) begin
-          if( set_i & !start_i )
+          if( set_i && !start_i )
             next_state = CHANGE_SEC_S;
           if( change_i )
             increm = 1'b1;
@@ -72,7 +71,7 @@ always @( * ) begin
     CHANGE_SEC_S:
       begin
         if( !dev_run_i ) begin
-          if( set_i & !start_i )
+          if( set_i && !start_i )
             next_state = CHANGE_T_S;
           if( change_i )
             increm = 1'b1;
@@ -86,7 +85,7 @@ always @( * ) begin
     CHANGE_T_S:
       begin
         if( !dev_run_i ) begin
-          if( set_i & !start_i ) begin
+          if( set_i && !start_i ) begin
             next_state = IDLE_S;
           end
           if( change_i )
@@ -106,6 +105,5 @@ always @( * ) begin
 end
 
 assign inc_this_o = increm;
-assign cnt        = state;
 
 endmodule
